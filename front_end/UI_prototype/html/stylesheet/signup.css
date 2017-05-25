@@ -6,19 +6,21 @@ html, body {
 	height: 100%;
 }
 
-p {
+#login_form p {
+	margin-left: 3px;
 	font-family: NaumGothic;
-	font-size: 8px;
+	font-size: 12px;
+	font-weight: 600;
 }
-a {
+#login_form a {
 	font-family: NaumGothic;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 600;
 }
 
 #sign_up {
 	position: relative;
-	height: 100%;
+	height: calc(100% - 60px);
 }
 
 #background {
@@ -42,7 +44,7 @@ a {
 }
 
 #signup_content {
-	background-color: rgba(255,255,255, 0.5);
+	
 }
 
 .box {
@@ -59,7 +61,7 @@ a {
 	height: auto;
 	margin: auto;
 	padding: 40px 20px;
-	top: calc((100% - 300px) / 2);
+	top: calc((100% - 340px) / 2);
 }
 
 input.input_border {
