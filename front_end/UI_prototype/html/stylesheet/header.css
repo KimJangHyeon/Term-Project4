@@ -7,7 +7,7 @@
 }
 
 #header_tool_bar {
-	width: 100%;
+	width: calc(100% - 8px);
 	height: 48px;
 	box-shadow: 0 1px 0 rgba(12,13,14,0.15), 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent;
 	padding: 4px;
