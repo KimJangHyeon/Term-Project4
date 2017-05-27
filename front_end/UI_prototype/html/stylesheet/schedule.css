@@ -1,0 +1,103 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#schedule {
+	position: relative;
+	height: calc(100% - 60px);
+}
+
+#background {
+	position: absolute;
+	background-image: url("../public/images/background.jpg");
+	background-size: 121%;
+	background-repeat: no-repeat;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: auto;
+}
+
+.content {
+	position: relative;
+	max-width: 960px;
+	height: 100%;
+	margin: auto;
+}
+
+#schedule_content {
+	background-color: rgba(255,255,255, 0.5);
+}
+
+#day {
+	text-align: center;
+	height: 10%;
+	padding-top: 40px;
+
+}
+
+#day a {
+	font-family: NaumGothic;
+	font-size: 36px;
+	font-weight: 600;
+	vertical-align: middle;
+	color: rgba(0,0,0, 0.7);
+
+}
+
+#show_reserve {
+	width: 100%;
+	margin-top: 5%;
+}
+#graph_reserve {
+	width: 90%;
+	height: 2px;
+	margin: auto;
+	background-color: rgba(0,0,0, 0.4);
+}
+
+#show_reserve h2 {
+	font-family: NaumGothic;
+	font-size: 16px;
+	font-weight: 600;
+	margin-left: 6%;
+	color: rgba(0,0,0, 0.7);
+}
+#show_reserve h3 {
+	font-family: NaumGothic;
+	font-size: 12px;
+	font-weight: 600;
+	color: rgba(0,0,0, 0.7);
+}
+
+#show_reserve_default_time {
+	width: 92%;
+	margin-left: 4%;
+	float:left;
+}
+#left_default_time {
+	float: left;
+}
+#right_default_time {
+	float: right;
+}
+
+#reserve {
+	width: 100%;
+	float: left;
+}
+#circular_graph {
+	width: 50%;
+	float: left;
+	margin-top: 10%;
+}
+#reserve_input {
+	width: 50%;
+	float: left;
+}
