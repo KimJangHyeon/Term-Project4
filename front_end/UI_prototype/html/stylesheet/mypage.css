@@ -1,0 +1,76 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#mypage {
+	position: relative;
+	height: calc(100% - 60px);
+}
+
+#mypage a {
+	font-family: NaumGothic;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+#background {
+	position: absolute;
+	background-image: url("../public/images/background.jpg");
+	background-size: 121%;
+	background-repeat: no-repeat;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: auto;
+}
+
+.content {
+	position: relative;
+	max-width: 960px;
+	height: 100%;
+	margin: auto;
+}
+
+#mypage_content {
+	background-color: rgba(255,255,255, 0.5);
+	text-align: center;
+	padding-top: 2%;
+}
+
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #E2E2E2;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #E2E2E2;
+    border-left: 1px solid #E2E2E2;
+    background: #FFFFFF;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #212121;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
