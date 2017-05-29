@@ -10,7 +10,6 @@ public class Header {
     public static String getSignUp() {
         return "Sign Up";
     }
-    public static String getMyPage() {
-        return "My Page";
-    }
+    public static String getLogoTitle() { return "예약 시스템"; }
+    public static String getMyPage() { return "My Page"; }
 }

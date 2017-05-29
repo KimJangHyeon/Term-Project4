@@ -27,8 +27,16 @@
             <div id="logo">
                 <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
-            <p id="logo_txt">예약 시스템</p>
-            <p id="signin_txt"><%=Header.getMyPage()%></p>
+            <form id="logo_form" method="post" action="index.jsp">
+                <input type="hidden" name="hiddenvalue" value='go_reserve'>
+                <p id="logo_txt" onclick="document.getElementById('logo_form').submit()"><%=Header.getLogoTitle()%></p>
+            </form>
+
+            <form id="mypage_form" method="post" action="index.jsp">
+                <input type="hidden" name="hiddenvalue" value='go_mypage'>
+                <p id="mypage_txt" onclick="document.getElementById('mypage_form').submit()"><%=Header.getMyPage()%></p>
+            </form>
+
         </div>
     </div>
 </div>

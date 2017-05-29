@@ -37,6 +37,12 @@
         else if (type.equals("go_signup")) {
             pageContext.forward("view/signup.jsp");
         }
+        else if (type.equals("go_reserve")) {
+            pageContext.forward("view/reserve.jsp");
+        }
+        else if (type.equals("go_mypage")) {
+            pageContext.forward("view/mypage.jsp");
+        }
 
     } catch (Exception e) {
         pageContext.forward("view/signup.jsp");
