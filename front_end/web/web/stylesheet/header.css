@@ -43,6 +43,16 @@
 
 }
 
+#signup_txt {
+    float: right;
+    font-family: NaumGothic;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0 12px 0 0;
+    padding: 14px;
+
+}
+
 
 .container {
     max-width: 960px;

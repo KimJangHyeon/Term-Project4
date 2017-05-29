@@ -25,7 +25,12 @@
                 <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
             <p id="logo_txt">예약 시스템</p>
-            <p id="signin_txt" onclick=<%%>><%=Header.getSignIn()%></p>
+
+            <form id="signin_form" method="post" action="index.jsp">
+                <input type="hidden" name="hiddenvalue" value='go_signin'>
+                <p id="signin_txt" type="submit" onclick="document.getElementById('signin_form').submit()"><%=Header.getSignIn()%></p>
+            </form>
+
         </div>
     </div>
 </div>

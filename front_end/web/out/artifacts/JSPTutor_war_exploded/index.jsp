@@ -22,6 +22,20 @@
             request.setAttribute("name", name);
 
             pageContext.forward("view/reserve.jsp");
+        } else if (type.equals("signin")) {
+            String uid = request.getParameter("uid");
+            String pw = request.getParameter("pw");
+
+            request.setAttribute("uid", uid);
+            request.setAttribute("pw", pw);
+
+            pageContext.forward("view/reserve.jsp");
+        }
+        else if (type.equals("go_signin")) {
+            pageContext.forward("view/signin.jsp");
+        }
+        else if (type.equals("go_signup")) {
+            pageContext.forward("view/signup.jsp");
         }
 
     } catch (Exception e) {
