@@ -25,7 +25,7 @@
                 <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
             <p id="logo_txt">예약 시스템</p>
-            <p id="signin_txt"><%=Header.getSignIn()%></p>
+            <p id="signin_txt" onclick=<%%>><%=Header.getSignIn()%></p>
         </div>
     </div>
 </div>
@@ -34,8 +34,9 @@
     <div id="background" />
     <div id="signup_content" class="content">
         <div id="wrapper_login_form" class="box">
-            <form id="login_form" method="post" action="../controller/c_signup.jsp">
+            <form id="login_form" method="post" action="index.jsp">
                 <a>지금 회원가입 하고 방을 예약해요!</a><br>
+                <input type="hidden" name="hiddenvalue" value='signup'>
                 <label for="uid">ID</label>
                 <input class="input_border" type="text" name="uid" id="uid"><br>
                 <label for="pw">Password</label>

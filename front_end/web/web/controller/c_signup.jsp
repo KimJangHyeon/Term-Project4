@@ -12,5 +12,11 @@
     String pw = request.getParameter("pw");
     String name = request.getParameter("name");
 
-    response.sendRedirect("../view/reserve.jsp");
+    request.setAttribute("uid", uid);
+    request.setAttribute("pw", pw);
+    request.setAttribute("name", name);
+
+    pageContext.forward("../view/reserve.jsp");
+
+    //response.sendRedirect("../view/reserve.jsp");
 %>
