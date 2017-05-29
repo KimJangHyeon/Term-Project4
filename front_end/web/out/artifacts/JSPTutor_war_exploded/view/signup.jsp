@@ -25,7 +25,7 @@
                 <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
             <p id="logo_txt">예약 시스템</p>
-            <p id="signin_txt"><%=Header.getSignIn()%>></p>
+            <p id="signin_txt"><%=Header.getSignIn()%></p>
         </div>
     </div>
 </div>

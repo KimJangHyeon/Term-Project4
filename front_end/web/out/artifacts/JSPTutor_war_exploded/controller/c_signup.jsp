@@ -11,5 +11,6 @@
     String uid = request.getParameter("uid");
     String pw = request.getParameter("pw");
     String name = request.getParameter("name");
+
+    response.sendRedirect("../view/reserve.jsp");
 %>
-<div><%=uid%></div>
