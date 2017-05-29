@@ -1,0 +1,52 @@
+@import url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css');
+
+#top_color_bar {
+    width: 100%;
+    height: 4px;
+    background-color: #2962FF;
+}
+
+#header_tool_bar {
+    width: calc(100% - 8px);
+    height: 48px;
+    box-shadow: 0 1px 0 rgba(12,13,14,0.15), 0 0 0 transparent, 0 0 0 transparent, 0 0 0 transparent;
+    padding: 4px;
+}
+
+#logo {
+    margin-left: 10px;
+    width: 48px;
+    height: 48px;
+    float: left;
+}
+#logo_img {
+    height: 100%;
+    float: left;
+}
+
+#logo_txt {
+    float: left;
+    font-family: NaumGothic;
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0;
+    padding: 12px;
+}
+
+#signin_txt {
+    float: right;
+    font-family: NaumGothic;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0 12px 0 0;
+    padding: 14px;
+
+}
+
+
+.container {
+    max-width: 960px;
+    height: 100%;
+    margin: auto;
+    vertical-align: middle;
+}
