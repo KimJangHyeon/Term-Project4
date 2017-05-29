@@ -26,9 +26,9 @@
             </div>
             <p id="logo_txt">예약 시스템</p>
 
-            <form id="signin_form" method="post" action="index.jsp">
-                <input type="hidden" name="hiddenvalue" value='go_signin'>
-                <p id="signin_txt" type="submit" onclick="document.getElementById('signin_form').submit()"><%=Header.getSignIn()%></p>
+            <form id="signup_form" method="post" action="index.jsp">
+                <input type="hidden" name="hiddenvalue" value='go_signup'>
+                <p id="signup_txt" onclick="document.getElementById('signup_form').submit()"><%=Header.getSignUp()%></p>
             </form>
 
         </div>
@@ -37,18 +37,19 @@
 
 <div id="sign_up">
     <div id="background" />
+
     <div id="signup_content" class="content">
         <div id="wrapper_login_form" class="box">
-            <form id="login_form" method="post" action="index.jsp">
-                <a>지금 회원가입 하고 방을 예약해요!</a><br>
-                <input type="hidden" name="hiddenvalue" value='signup'>
+
+            <form id="login_form" method="post">
+                <a>예약 시스템에 로그인합니다</a>
+                <input type="hidden" name="hiddenvalue" value='signin'>
+                <br>
                 <label for="uid">ID</label>
                 <input class="input_border" type="text" name="uid" id="uid"><br>
                 <label for="pw">Password</label>
-                <input class="input_border" type="password" name="pw" id="pw"><br>
-                <label for="name">Name</label>
-                <input class="input_border" type="text" name="name" id="name"><br><br>
-                <input class="btn btn-blue" type="submit" value="Sign Up">
+                <input class="input_border" type="password" name="pw"id="pw"><br><br>
+                <input class="btn btn-blue" type="submit" value="Sign In">
             </form>
         </div>
     </div>

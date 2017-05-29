@@ -33,7 +33,7 @@
     padding: 12px;
 }
 
-#signin_txt {
+#signin_txt, #signup_txt, #mypage_txt {
     float: right;
     font-family: NaumGothic;
     font-weight: 500;
@@ -42,7 +42,6 @@
     padding: 14px;
 
 }
-
 
 .container {
     max-width: 960px;
