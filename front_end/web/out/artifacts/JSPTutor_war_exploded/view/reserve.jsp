@@ -187,12 +187,39 @@
                     </div>
                 </div>
             </div>
-            <div id="reserve_input">
+            <form id="reserve_input" method="post">
+                <input type="hidden" name="hiddenvalue" value='reserve'>
                 <div id="wrapper_reserve_form" class="box">
                     <p>시작시간</p>
                     <select class="selector_border" name="start">
                         <option>08:00</option>
                         <option>08:30</option>
+                        <option>09:00</option>
+                        <option>09:30</option>
+                        <option>10:00</option>
+                        <option>10:30</option>
+                        <option>11:00</option>
+                        <option>11:30</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>14:00</option>
+                        <option>14:30</option>
+                        <option>15:00</option>
+                        <option>15:30</option>
+                        <option>16:00</option>
+                        <option>16:30</option>
+                        <option>17:00</option>
+                        <option>17:30</option>
+                        <option>18:00</option>
+                        <option>18:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                        <option>21:30</option>
                     </select>
                     <br>
                     <p>사용시간</p>
@@ -206,7 +233,7 @@
                     <br>
                     <input class="btn btn-blue" type="submit" value="Reserve">
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
