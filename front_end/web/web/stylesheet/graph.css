@@ -116,16 +116,7 @@ body {
 
 .chart-skills li:nth-child(7) {
     z-index: 22;
-
-    border: 40px solid;
-    border-top: none;
-    border-bottom-left-radius: 174px;
-    border-bottom-right-radius: 175px;
-
-    border-color: firebrick;
-
-    top: 104%;
-
+    border-color: #FFFFFF;
     animation-name: rotate-seven;
     animation-delay: .6s;
 }

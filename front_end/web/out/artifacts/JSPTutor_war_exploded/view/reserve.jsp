@@ -1,4 +1,8 @@
 <%@ page import="component.Header" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.ListIterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +23,77 @@
 
 <body>
 
+<%
+    String uid = request.getParameter("uid");
+    String name = request.getParameter("name");
+
+    String eachColor[] = new String[28];
+    String scheduleArr[] = new String[28];
+    String colorArr[] = {
+            "#7BE0AD",
+            "#E7E5E5",
+            "#E5D0E3",
+            "#84D2F6",
+            "#E0B0D5",
+            "#DDFFF7",
+            "#FFA69E",
+            "#AA4465",
+            "#84D2F6",
+            "#462255",
+
+            "#EAC5D8",
+            "#DBD8F0",
+            "#E2FADB",
+            "#84D2F6",
+            "#DBEFBC",
+            "#963484",
+            "#3066BE",
+            "#28C2FF",
+            "#84D2F6",
+            "#2AF5FF",
+
+            "#FCFCFC",
+            "#F7567C",
+            "#FFFAE3",
+            "#84D2F6",
+            "#5D576B",
+            "#BEB8EB",
+            "#5299D3",
+            "#0B5563",
+    };
+
+    for (int iSchedule = 0; iSchedule < 28; iSchedule++) {
+        scheduleArr[iSchedule] = "";
+    }
+
+    scheduleArr[1] = "dujin";
+    scheduleArr[5] = "pop";
+    scheduleArr[8] = "ping";
+    scheduleArr[9] = "ping";
+    scheduleArr[10] = "ping";
+
+    int cnt = 0;
+    String past = "";
+    for (int iSchedule = 0; iSchedule < 28; iSchedule++) {
+        if (!scheduleArr[iSchedule].equals("")) {
+            // arr중에 겹쳤다면 cnt는 안더해줘도 되고 컬러만 바꿔줌
+            if (past.equals(scheduleArr[iSchedule])) {
+
+            } else {
+                cnt++;
+            }
+            // list iSchedule 번째를 color 로 색칠
+            eachColor[iSchedule] = colorArr[cnt];
+
+            past = scheduleArr[iSchedule];
+        } else {
+            eachColor[iSchedule] = "#FFFFFF";
+        }
+    }
+
+
+%>
+
 <div id="header">
     <div id="top_color_bar"></div>
 
@@ -31,6 +106,10 @@
                 <input type="hidden" name="hiddenvalue" value='go_reserve'>
                 <p id="logo_txt" onclick="document.getElementById('logo_form').submit()"><%=Header.getLogoTitle()%></p>
             </form>
+
+            <div>
+
+            </div>
 
             <form id="mypage_form" method="post" action="index.jsp">
                 <input type="hidden" name="hiddenvalue" value='go_mypage'>
@@ -67,34 +146,38 @@
                         </div>
                         <div id="content_graph">
                             <ul class="chart-skills">
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
-                                <li><span></span></li>
+                                <%
+
+
+                                %>
+                                <li style="border-color:<%=eachColor[0]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[1]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[2]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[3]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[4]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[5]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[6]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[7]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[8]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[9]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[10]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[11]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[12]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[13]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[14]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[15]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[16]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[17]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[18]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[19]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[20]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[21]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[22]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[23]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[24]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[25]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[26]%>"><span></span></li>
+                                <li style="border-color:<%=eachColor[27]%>"><span></span></li>
 
                             </ul>
                         </div>
