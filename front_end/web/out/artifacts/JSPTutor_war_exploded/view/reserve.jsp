@@ -138,7 +138,7 @@
             <div id="circular_graph">
                 <div id="graph_box" class="box">
                     <div id="top_graph">
-                        <h3>13:00</h3>
+                        <h3>15:00</h3>
                     </div>
                     <div id="horizontal_graph">
                         <div id="left_side_graph">
@@ -150,34 +150,34 @@
 
 
                                 %>
-                                <li style="border-color:<%=eachColor[0]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[1]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[2]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[3]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[4]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[5]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[6]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[7]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[8]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[9]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[10]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[11]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[12]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[13]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[14]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[15]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[16]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[17]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[18]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[19]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[20]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[21]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[22]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[23]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[24]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[25]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[26]%>"><span></span></li>
-                                <li style="border-color:<%=eachColor[27]%>"><span></span></li>
+                                <li title="08:00 ~ 08:30" style="border-color:<%=eachColor[0]%>"><span></span></li>
+                                <li title="08:30 ~ 09:00" style="border-color:<%=eachColor[1]%>"><span></span></li>
+                                <li title="09:00 ~ 09:30" style="border-color:<%=eachColor[2]%>"><span></span></li>
+                                <li title="09:30 ~ 10:00" style="border-color:<%=eachColor[3]%>"><span></span></li>
+                                <li title="10:00 ~ 10:30" style="border-color:<%=eachColor[4]%>"><span></span></li>
+                                <li title="10:30 ~ 11:00" style="border-color:<%=eachColor[5]%>"><span></span></li>
+                                <li title="11:00 ~ 11:30" style="border-color:<%=eachColor[6]%>"><span></span></li>
+                                <li title="11:30 ~ 12:00" style="border-color:<%=eachColor[7]%>"><span></span></li>
+                                <li title="12:00 ~ 12:30" style="border-color:<%=eachColor[8]%>"><span></span></li>
+                                <li title="12:30 ~ 13:00" style="border-color:<%=eachColor[9]%>"><span></span></li>
+                                <li title="13:00 ~ 13:30" style="border-color:<%=eachColor[10]%>"><span></span></li>
+                                <li title="13:30 ~ 14:00" style="border-color:<%=eachColor[11]%>"><span></span></li>
+                                <li title="14:00 ~ 14:30" style="border-color:<%=eachColor[12]%>"><span></span></li>
+                                <li title="14:30 ~ 15:00" style="border-color:<%=eachColor[13]%>"><span></span></li>
+                                <li title="15:00 ~ 15:30" style="border-color:<%=eachColor[14]%>"><span></span></li>
+                                <li title="15:30 ~ 16:00" style="border-color:<%=eachColor[15]%>"><span></span></li>
+                                <li title="16:00 ~ 16:30" style="border-color:<%=eachColor[16]%>"><span></span></li>
+                                <li title="16:30 ~ 17:00" style="border-color:<%=eachColor[17]%>"><span></span></li>
+                                <li title="17:00 ~ 17:30" style="border-color:<%=eachColor[18]%>"><span></span></li>
+                                <li title="17:30 ~ 18:00" style="border-color:<%=eachColor[19]%>"><span></span></li>
+                                <li title="18:00 ~ 18:30" style="border-color:<%=eachColor[20]%>"><span></span></li>
+                                <li title="18:30 ~ 19:00" style="border-color:<%=eachColor[21]%>"><span></span></li>
+                                <li title="19:00 ~ 19:30" style="border-color:<%=eachColor[22]%>"><span></span></li>
+                                <li title="19:30 ~ 20:00" style="border-color:<%=eachColor[23]%>"><span></span></li>
+                                <li title="20:00 ~ 20:30" style="border-color:<%=eachColor[24]%>"><span></span></li>
+                                <li title="20:30 ~ 21:00" style="border-color:<%=eachColor[25]%>"><span></span></li>
+                                <li title="21:00 ~ 21:30" style="border-color:<%=eachColor[26]%>"><span></span></li>
+                                <li title="21:30 ~ 22:00" style="border-color:<%=eachColor[27]%>"><span></span></li>
 
                             </ul>
                         </div>
