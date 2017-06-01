@@ -30,6 +30,12 @@
             request.setAttribute("pw", pw);
 
             pageContext.forward("view/reserve.jsp");
+        } else if (type.equals("reserve")) {
+            String uid = request.getParameter("uid");
+
+            request.setAttribute("uid", uid);
+
+            pageContext.forward("view/reserve.jsp");
         }
         else if (type.equals("go_signin")) {
             pageContext.forward("view/signin.jsp");

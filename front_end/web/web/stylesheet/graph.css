@@ -2,8 +2,15 @@ body {
     font: normal 16px/1.5 'Roboto', sans-serif;
     background: #f1f1f1;
 }
-
-
+li[title]:hover:after {
+    content: attr(title);
+    padding: 4px 8px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    white-space: nowrap;
+    background:red;
+}
 /* RESET STYLES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -116,16 +123,7 @@ body {
 
 .chart-skills li:nth-child(7) {
     z-index: 22;
-
-    border: 40px solid;
-    border-top: none;
-    border-bottom-left-radius: 174px;
-    border-bottom-right-radius: 175px;
-
-    border-color: firebrick;
-
-    top: 104%;
-
+    border-color: #FFFFFF;
     animation-name: rotate-seven;
     animation-delay: .6s;
 }
