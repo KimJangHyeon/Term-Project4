@@ -2,8 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="./stylesheet/header.css">
-    <link rel="stylesheet" type="text/css" href="./stylesheet/sign_in_up.css">
+
 </head>
 
 <body>
@@ -14,11 +13,11 @@
     <div id="header_tool_bar">
         <div class="container">
             <div id="logo">
-                <img id="logo_img" src="./public/images/logo_header.png" />
+                <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
             <p id="logo_txt">예약 시스템</p>
 
-            <form id="signup_form" method="post" action="index.jsp">
+            <form id="signup_form" method="post" action="{{ url_for('signup') }}">
                 <input type="hidden" name="hiddenvalue" value='go_signup'>
                 <p id="signup_txt" onclick="document.getElementById('signup_form').submit()">Sign Up</p>
             </form>
@@ -27,7 +26,7 @@
     </div>
 </div>
 
-<div id="sign_up">
+<div id="sign_in">
     <div id="background" />
 
     <div id="signup_content" class="content">

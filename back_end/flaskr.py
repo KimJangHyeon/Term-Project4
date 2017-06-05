@@ -1,43 +1,47 @@
+#-*- coding: utf-8 -*-
 from __future__ import with_statement
-from flask import Flask, flash, session, request, redirect, url_for
+from flask import Flask, flash, session, request, redirect, url_for, render_template
+import logging
+#import templates as view
+
 app = Flask(__name__)
 
 
-#유저 로그인 class
+#class
 class User(object):
-    def __init__(self, email):
+    def __init__(self, id):
         self.signed_in = False
-        self.email = email
-        self.db = connect_db()
+        self.id = id
+        #self.db = connect_db()
 
-    def signin(self, pwss):
+    def signin(self, pw):
         error = None
         cur = self.db.cursor()
 
-        email_ = cur.execute(u"SELECT EXISTS ( SELECT email FROM userdata WHERE email = ?)", (self.email,)).fetchone()
-        if email_[0] == 0:
+        id_ = cur.execute(u"SELECT EXISTS ( SELECT id FROM userdata WHERE id = ?)", (self.id,)).fetchone()
+        if id_[0] == 0:
             error = "Invalid"
         else:
-            pwss_ = cur.execute(u"SELECT EXISTS ( SELECT password FROM userdata WHERE email = ?)",
-                                (self.email,)).fetchone()
-            if pwss_[0] == pwss:
+            pw_ = cur.execute(u"SELECT EXISTS ( SELECT password FROM userdata WHERE id = ?)",
+                                (self.id,)).fetchone()
+            if pw_[0] == pw:
                 error = "Invalid"
             else:
                 session['logged_in'] = True
-                session['email'] = self.email
+                session['id'] = self.id
                 self.signed_in = True
                 self.name = self.db.execute(
-                    'SELECT username FROM userdata WHERE email=\'' + request.form['email'] + '\'').fetchone()
+                    'SELECT username FROM userdata WHERE id=\'' + request.form['id'] + '\'').fetchone()
                 flash('Welcom ' + self.name[0])
         return error
 
-    def signup(self, email, name, pw, pw_identify):
+    def signup(self, id, name, pw, pw_identify):
         error = None
         cur = self.db.cursor()
         #같은 아이디가 있는 경우
-
+        #db넣고 짜는 걸루...
         #입력값이 없는 경우
-        if "" in [email, name, pw, pw_identify]:
+        if "" in [id, name, pw, pw_identify]:
             error = "Filed is Empty!"
 
         #두 pw가 다른 경우
@@ -46,13 +50,13 @@ class User(object):
 
         #저장
         else:
-            email_ = cur.execute(u'SELECT EXISTS (SELECT email FROM userdata WHERE email = ?)', (email,)).fetchone()
+            id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
             name_ = cur.execute(u'SELECT EXISTS (SELECT username FROM userdata WHERE username = ?)', (name,)).fetchone()
 
-            if email_[0] == 0 and name_[0] == 0:
+            if id_[0] == 0 and name_[0] == 0:
                 flash('Account Created!')
-                self.db.execute('INSERT INTO userdata (email, username, password) VALUES (?, ?, ?)',
-                                [email, name, pw])
+                self.db.execute('INSERT INTO userdata (id, username, password) VALUES (?, ?, ?)',
+                                [id, name, pw])
                 self.db.commit()
             else:
                 error = "Already Exist"
@@ -66,20 +70,15 @@ class User(object):
         error = None
         return redirect(url_for('signin'))
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
-
-
 
 
 @app.route("/")
-def hello():
-    flash("hello")
-    return "hello world"
+def signin():
+    return render_template('signin.html')
 
-@app.route("/h/")
-def llo():
-    return "/h"
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
 
+        return render_template('signup.html')
 if __name__ == "__main__":
     app.run()
