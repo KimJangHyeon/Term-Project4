@@ -17,7 +17,7 @@
             </div>
             <p id="logo_txt">예약 시스템</p>
 
-            <form id="signup_form" method="post" action="{{ url_for('signup') }}">
+            <form id="signup_form" method="post" action="{{ url_for('go_signup') }}">
                 <input type="hidden" name="hiddenvalue" value='go_signup'>
                 <p id="signup_txt" onclick="document.getElementById('signup_form').submit()">Sign Up</p>
             </form>

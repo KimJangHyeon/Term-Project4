@@ -30,8 +30,11 @@
 <div id="sign_up">
     <div id="background" />
     <div id="signup_content" class="content">
+
+        {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+
         <div id="wrapper_login_form" class="box">
-            <form id="login_form" method="post" action="index.jsp">
+            <form id="login_form" method="post" action="{{ url_for('signup') }}">
                 <a>지금 회원가입 하고 방을 예약해요!</a><br>
                 <input type="hidden" name="hiddenvalue" value='signup'>
                 <label for="uid">ID</label>
