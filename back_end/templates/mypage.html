@@ -23,7 +23,7 @@
             <div id="logo">
                 <img id="logo_img" src="../public/images/logo_header.png" />
             </div>
-            <form id="logo_form" method="post" action="index.jsp">
+            <form id="logo_form" method="post" action="{{ url_for('signup') }}">
                 <input type="hidden" name="hiddenvalue" value='go_reserve'>
                 <p id="logo_txt" onclick="document.getElementById('logo_form').submit()">예약 시스템</p>
             </form>
@@ -56,22 +56,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">2017-05-28</th>
-                <td>0</td>
-                <td>08:00</td>
-                <td>09:00</td>
-                <td>v</td>
 
-            </tr>
+            {% for l in reserved %}
             <tr>
-                <th scope="row">2017-05-28</th>
-                <td>0</td>
-                <td>08:00</td>
-                <td>09:00</td>
-                <td>v</td>
-
+                <th scope="row"> {{ l.date }} </th>
+                <td> {{ l.room_num }} </td>
+                <td> {{ l.start }} </td>
+                <td> {{ l.end }} </td>
+                <td>삭제</td>
             </tr>
+            {% endfor %}
 
             </tbody>
         </table>

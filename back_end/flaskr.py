@@ -74,9 +74,9 @@ class User(object):
 
 
 
-@app.route("/")
-def signin():
-    return render_template('signin.html')
+# @app.route("/")
+# def signin():
+#     return render_template('signin.html')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -103,9 +103,20 @@ def signup():
 def go_signup():
     return render_template('signup.html')
 
+
+#@app.route("/main/user/<userid>")
+@app.route("/")
+def go_mypage():
+    arr = [
+        {'room_num': 0, 'date': '170606', 'start': '08:00', 'end': '09:00'},
+        {'room_num': 1, 'date': '170606', 'start': '08:00', 'end': '09:00'},
+        {'room_num': 0, 'date': '170607', 'start': '08:00', 'end': '09:00'},
+        {'room_num': 1, 'date': '170607', 'start': '08:00', 'end': '09:00'},
+        {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
+        {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'},
+    ]
+    return render_template('mypage.html', userid="A", reserved=arr)
+
+
 if __name__ == "__main__":
     app.run()
-
-@app.route("/main/user/<userid>")
-def mypage(userid):
-    return render_template('mypage.html', userid)

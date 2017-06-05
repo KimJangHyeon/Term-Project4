@@ -35,7 +35,7 @@
 
             </div>
 
-            <form id="mypage_form" method="post" action="index.jsp">
+            <form id="mypage_form" method="post" action="{{ url_for('go_mypage') }}">
                 <input type="hidden" name="hiddenvalue" value='go_mypage'>
                 <p id="mypage_txt" onclick="document.getElementById('mypage_form').submit()">My Page</p>
             </form>
