@@ -46,10 +46,6 @@ class User(object):
         #db넣고 짜는 걸루...
 
 
-        #입력값이 없는 경우
-        if "" in [id, name, pw]:
-            error = "Filed is Empty!"
-
         #저장
         #else:
             # id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
@@ -73,40 +69,19 @@ class User(object):
         return redirect(url_for('signin'))
 
 
-
-# @app.route("/")
-# def signin():
-#     return render_template('signin.html')
-
-@app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    error = None
-    logging.error(request.method)
-    if request.method == 'POST':
-        id = request.form['uid']
-        pw = request.form['pw']
-        name = request.form['name']
-        if "" in [id, pw, name]:
-            error = 'Empty Files'
-            return render_template('signup.html', error = error)
-        else:
-            user = User(id)
-            error = user.signup(id, pw, name)
-            if error == None:
-                return render_template('signin.html')
-            return render_template('signup.html', error = error)
-    # else:
-    #     return render_template('signin.html')
-
-
-@app.route("/gosignup", methods=['GET', 'POST'])
-def go_signup():
-    return render_template('signup.html')
-
-
-#@app.route("/main/user/<userid>")
+#sign in page 실행
 @app.route("/")
+def signin():
+    return render_template('signin.html')
+
+
+
+#mypage 실행
+@app.route("/user/<userid>")
 def go_mypage():
+    #시간표 db에서 같은 아이디의 사람을 {'room_num', 'date', 'start', 'end'} 를 불러오는 arr 생성 및 넘겨주기
+    #id에 해당하는 유저의 정보를 user db에서 넘겨주기
+
     arr = [
         {'room_num': 0, 'date': '170606', 'start': '08:00', 'end': '09:00'},
         {'room_num': 1, 'date': '170606', 'start': '08:00', 'end': '09:00'},
@@ -115,7 +90,64 @@ def go_mypage():
         {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
         {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'},
     ]
+    #reuturn render_template('mypage.html', user = arr, reserved = arr)
     return render_template('mypage.html', userid="A", reserved=arr)
+
+#예약 취소
+@app.route("")
+def lab_cancel():
+    #시간표 db에서 같은 id를 가진 경우 전부 null로 초기화
+    #return render_template("mypage.html", user = arr, reserved = arr)
+    return
+
+#예약
+@app.route("")
+def lab_book():
+    #시간표 db에서 선택한 시간대에 null이 아닌 것이 있는지 확인
+    #있다면 에러 출력
+    #없으면 null에 id입력
+    #return render_template("mypage.html", user = arr, reserved = arr)
+    return
+
+#id를 이름으로 (parameter:id, return: name)
+def id_into_name(uid):
+    #유저 db에서 id를 찾아 이름을 return
+    #return name
+    return
+
+
+#sign up page 실행
+@app.route("/gosignup", methods=['GET', 'POST'])
+def go_signup():
+    return render_template('signup.html')
+
+#sign up 에서 sign up 버튼을 누른 경우
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    error = None
+    logging.error(request.method)
+    if request.method == 'POST':
+        id = request.form['uid']
+        pw = request.form['pw']
+        name = request.form['name']
+
+        #입력을 안한 값이 있는 경우
+        if "" in [id, pw, name]:
+            error = 'Empty Files'
+            return render_template('signup.html', error = error)
+
+        else:
+            user = User(id)
+            error = user.signup(id, pw, name)
+
+            #sign up 성공
+            if error == None:
+                return render_template('signin.html')
+
+            #id 중복
+            return render_template('signup.html', error = error)
+    # else:
+    #     return render_template('signin.html')
 
 
 if __name__ == "__main__":
