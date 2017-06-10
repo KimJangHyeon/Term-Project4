@@ -32,7 +32,7 @@
     <div id="signup_content" class="content">
         <div id="wrapper_login_form" class="box">
 
-            <form id="login_form" method="post">
+            <form id="login_form" method="post" action="{{ url_for('signin') }}">
                 <a>예약 시스템에 로그인합니다</a>
                 <input type="hidden" name="hiddenvalue" value='signin'>
                 <br>

@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import with_statement
 from flask import Flask, flash, session, request, redirect, url_for, render_template, g
 import sqlite3
@@ -6,10 +6,12 @@ import os
 import urllib2
 from flask_socketio import SocketIO, send
 from contextlib import closing
+import functions
 import logging
-#import templates as view
+# import templates as view
 
 app = Flask(__name__)
+
 
 def initialize_db():
     con = sqlite3.connect("sqlite.db")
@@ -34,167 +36,150 @@ def initialize_db():
         );'''
     cur.execute(sql)
 
+
 def render_redirect(template, url, error):
     if error == None:
         return redirect(url_for(url))
     return render_template(template, error=error)
 
-# #class
-# class User(object):
-#     def __init__(self, id):
-#         self.signed_in = False
-#         self.id = id
-#         self.db = connect_db()
-#
-#     def signin(self, pw):
-#         error = None
-#         cur = self.db.cursor()
-#
-#         id_ = cur.execute(u"SELECT EXISTS ( SELECT id FROM userdata WHERE id = ?)", (self.id,)).fetchone()
-#         if id_[0] == 0:
-#             error = "Invalid"
-#         else:
-#             pw_ = cur.execute(u"SELECT EXISTS ( SELECT password FROM userdata WHERE id = ?)",
-#                                 (self.id,)).fetchone()
-#             if pw_[0] == pw:
-#                 error = "Invalid"
-#             else:
-#                 session['logged_in'] = True
-#                 session['id'] = self.id
-#                 self.signed_in = True
-#                 self.name = self.db.execute(
-#                     'SELECT username FROM userdata WHERE id=\'' + request.form['id'] + '\'').fetchone()
-#                 flash('Welcom ' + self.name[0])
-#         return error
-#
-#     def signup(self, id, name, pw):
-#         error = None
-#         #cur = self.db.cursor()
-#         #같은 아이디가 있는 경우
-#         #db넣고 짜는 걸루...
-#
-#
-#         #저장
-#         #else:
-#             # id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
-#             # name_ = cur.execute(u'SELECT EXISTS (SELECT username FROM userdata WHERE username = ?)', (name,)).fetchone()
-#             #
-#             # if id_[0] == 0 and name_[0] == 0:
-#             #     flash('Account Created!')
-#             #     self.db.execute('INSERT INTO userdata (id, username, password) VALUES (?, ?, ?)',
-#             #                     [id, name, pw])
-#             #     self.db.commit()
-#             # else:
-#             #    error = "Already Exist"
-#         return error
-#
-#     def changeinfo(self):
-#         error = None
-#         return redirect(url_for('mypage'))
-#
-#     def signout(self):
-#         error = None
-#         return redirect(url_for('signin'))
-
-# def connect_db():
-#     return sqlite3.connect(app.config['DATABASE'])
-#
-# def init_db():
-#     with closing(connect_db()) as db:
-#         with app.open_resource('schema.sql', "r") as f:
-#             db.cursor().executescript(f.read())
-#         db.commit()
-#
-# def get_db():
-#     if not hasattr(g, 'sqlite_db'):
-#         g.sqlite_db = connect_db()
-#     return g.sqlite_db
-#
-# def close_db(error):
-#     if hasattr(g, 'sqlite_db'):
-#         g.sqlite_db.close()
+    # sign in page 실행
 
 
-#sign in page 실행
 @app.route("/")
-def signin():
+def home():
     return render_template('signin.html')
 
 
 
-#mypage 실행
-@app.route("/user/<userid>")
-def go_mypage():
-    #시간표 db에서 같은 아이디의 사람을 {'room_num', 'date', 'start', 'end'} 를 불러오는 arr 생성 및 넘겨주기
-    #id에 해당하는 유저의 정보를 user db에서 넘겨주기
 
-    arr = [
-        {'room_num': 0, 'date': '170606', 'start': '08:00', 'end': '09:00'},
-        {'room_num': 1, 'date': '170606', 'start': '08:00', 'end': '09:00'},
-        {'room_num': 0, 'date': '170607', 'start': '08:00', 'end': '09:00'},
-        {'room_num': 1, 'date': '170607', 'start': '08:00', 'end': '09:00'},
-        {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
-        {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'},
-    ]
-    #reuturn render_template('mypage.html', user = arr, reserved = arr)
-    return render_template('mypage.html', userid="A", reserved=arr)
-
-#예약 취소
-#@app.route("")
+# 예약 취소
 def lab_cancel():
-    #시간표 db에서 같은 id를 가진 경우 전부 null로 초기화
-    #return render_template("mypage.html", user = arr, reserved = arr)
+    # 시간표 db에서 같은 id를 가진 경우 전부 null로 초기화
+    # return render_template("mypage.html", user = arr, reserved = arr)
     return
 
-#예약
-#@app.route("")
+
+# 예약
 def lab_book():
-    #시간표 db에서 선택한 시간대에 null이 아닌 것이 있는지 확인
-    #있다면 에러 출력
-    #없으면 null에 id입력
-    #return render_template("mypage.html", user = arr, reserved = arr)
+    # 시간표 db에서 선택한 시간대에 null이 아닌 것이 있는지 확인
+    # 있다면 에러 출력
+    # 없으면 null에 id입력
+    # return render_template("mypage.html", user = arr, reserved = arr)
     return
 
-#id를 이름으로 (parameter:id, return: name)
+
+# id를 이름으로 (parameter:id, return: name)
 def id_into_name(uid):
-    #유저 db에서 id를 찾아 이름을 return
-    #return name
+    # 유저 db에서 id를 찾아 이름을 return
+    # return name
     return
 
 
-#sign up page 실행
+# sign up page 실행
 @app.route("/gosignup", methods=['GET', 'POST'])
 def go_signup():
     return render_template('signup.html')
 
-#sign up 에서 sign up 버튼을 누른 경우
-@app.route("/signup", methods=['GET', 'POST'])
+
+# sign up 에서 sign up 버튼을 누른 경우
+@app.route("/", methods=['GET', 'POST'])
 def signup():
     error = None
+    con = sqlite3.connect("sqlite.db")
+    cur = con.cursor()
     logging.error(request.method)
     if request.method == 'POST':
         id = request.form['uid']
         pw = request.form['pw']
         name = request.form['name']
 
-        #입력을 안한 값이 있는 경우
+        # 입력을 안한 값이 있는 경우
         if "" in [id, pw, name]:
             error = 'Empty Files'
-            return render_template('signup.html', error = error)
+            return render_template('signup.html', error=error)
 
         else:
-            user = User(id)
-            error = user.signup(id, pw, name)
+            id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
 
-            #sign up 성공
+            # id 중복
+            if (id_[0] != 0):
+                error = 'Same ID Exists'
+            # sign up 성공
             if error == None:
+                logging.error('enter error == None')
+                cur.execute('INSERT INTO userdata (id, username, password) VALUES (?, ?, ?)', [id, pw, name])
+                con.commit()
+                con.close()
                 return render_template('signin.html')
 
-            #id 중복
-            return render_template('signup.html', error = error)
-    # else:
-    #     return render_template('signin.html')
+
+            return render_template('signup.html', error=error)
+    else:
+        return render_template('signin.html')
 
 
+# def check_sign(id, pw):
+#     con = sqlite3.connect('sqlite.db')
+#     cur = con.cursor()
+#
+#     if request.method == 'POST':
+#         id = request.form['uid']
+#         pw = request.form['pw']
+#         if (id == ''):
+#             return 'id를 입력하세요'
+#         login_pw = cur.execute('SELECT password FROM userdata WHERE id = \'' + id + '\'').fetchone()
+#         con.close()
+#         logging.error(login_pw[0])
+#         if (login_pw[0] != pw):
+#             return 'id와 pw가 일치하지 않습니다'
+#         else:
+#             return render_template(url_for('signin', ))
+@app.route("/signin", methods=['GET', 'POST'])
+def signin():
+    id=None
+    error=None
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+
+    if request.method == 'POST':
+        id = request.form['uid']
+        pw = request.form['pw']
+        if(id==''):
+            error = 'id를 입력하세요'
+            return render_template('signin.html', error=error)
+        login_pw = cur.execute('SELECT password FROM userdata WHERE id = \''+ id + '\'').fetchone()
+        con.close()
+        logging.error(login_pw[0])
+        if(login_pw[0] != pw):
+            error='id와 pw가 일치하지 않습니다'
+            return render_template('signin.html', error=error)
+        else:
+            return render_template('reserve.html', uid = id)
+
+# mypage 실행
+@app.route("/mypage")
+def go_mypage(id):
+    # 시간표 db에서 같은 아이디의 사람을 {'room_num', 'date', 'start', 'end'} 를 불러오는 arr 생성 및 넘겨주기
+    # id에 해당하는 유저의 정보를 user db에서 넘겨주기
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    #name = cur.execute('SELECT name FROM userdata WHERE id = \''+id+'\'').fetchone()
+    user= functions.infrom_by_id(id)
+    name = user['name']
+    
+    # arr = [
+    #     {'room_num': 0, 'date': '170606', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 1, 'date': '170606', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 0, 'date': '170607', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 1, 'date': '170607', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'},
+    # ]
+    # reuturn render_template('mypage.html', user = arr, reserved = arr)
+    con.close()
+    return render_template('mypage.html', userid=id, reserved=arr)
+
+
+#id로 login 하기
 if __name__ == "__main__":
     app.run()
