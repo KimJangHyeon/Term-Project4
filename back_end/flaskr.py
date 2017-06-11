@@ -83,6 +83,9 @@ def id_into_name(uid):
 def go_signup():
     return render_template('signup.html')
 
+@app.route("/gosignin", method=['GET', 'POST'])
+def go_signin():
+    return render_template('signin.html')
 
 # sign up 에서 sign up 버튼을 누른 경우
 @app.route("/", methods=['GET', 'POST'])
