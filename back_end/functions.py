@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-
+import datetime
+import logging
 def initialize_db():
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
@@ -35,6 +36,8 @@ def initialize_db():
     	password TEXT NOT NULL, 
     	check_ INTEGER
         );'''
+    cur.execute(sql)
+    sql = "CREATE TABLE IF NOT EXISTS day(key_ INTEGER, today TEXT);"
     cur.execute(sql)
     con.commit()
     con.close()
@@ -82,7 +85,7 @@ def already_reserved(room, date, start_time, end_time):
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
     for i in range(start_time, end_time+1):
-        if cur.execute('SELECT name FROM Room'+room+'_timetable'+date+' where time = t_'+str(i)).fetchone()[0] != 'NULL':
+        if cur.execute('SELECT name FROM Room'+room+'_timetable'+date+' where time = \'t_'+str(i)+'\'').fetchone()[0] != 'NULL':
             already = 1
             break
     con.close()
@@ -94,3 +97,96 @@ def day_changed():
     cur = con.cursor()
     #유저 check 1로 전환
     cur.execute('UPDATE userdata SET check_ = 1 WHERE idn >= 1')
+
+    #timetable 전환
+    for i in range(0,28):
+        name_0 = cur.execute('SELECT name from Room0_timetable1 WHERE time=\'t_'+str(i)+'\'').fetchone()
+        cur.execute('UPDATE Room0_timetable0 SET name=\'' + name_0[0] + '\' WHERE time = \'t_'+str(i)+'\'')
+
+        name_1 = cur.execute('SELECT name from Room0_timetable2 WHERE time=\'t_' + str(i) + '\'').fetchone()
+        cur.execute('UPDATE Room0_timetable1 SET name=\'' + name_1[0] + '\' WHERE time = \'t_' + str(i) + '\'')
+
+        cur.execute('UPDATE Room0_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
+
+        name_2 = cur.execute('SELECT name from Room1_timetable1 WHERE time=\'t_'+str(i)+'\'').fetchone()
+        cur.execute('UPDATE Room1_timetable0 SET name=\'' + name_2[0] + '\' WHERE time = \'t_'+str(i)+'\'')
+
+        name_3 = cur.execute('SELECT name from Room1_timetable2 WHERE time=\'t_' + str(i) + '\'').fetchone()
+        cur.execute('UPDATE Room1_timetable1 SET name=\'' + name_3[0] + '\' WHERE time = \'t_' + str(i) + '\'')
+
+        cur.execute('UPDATE Room1_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
+        con.commit()
+        con.close()
+    return
+
+def month(mon):
+    if mon=='01':
+        return 31
+    if mon == '02':
+        return 28
+    if mon == '03':
+        return 31
+    if mon == '04':
+        return 30
+    if mon == '05':
+        return 31
+    if mon == '06':
+        return 30
+    if mon == '07':
+        return 31
+    if mon == '08':
+        return 31
+    if mon == '09':
+        return 30
+    if mon == '10':
+        return 31
+    if mon == '11':
+        return 30
+    if mon == '12':
+        return 31
+
+
+def priority(arr):
+    return int(arr[0])*365 + month(arr[1]) + int(arr[2])
+
+def day_reset():
+    now = datetime.datetime.now()
+    nowDate = now.strftime('%Y-%m-%d')
+    nowYear = now.strftime('%Y')
+    nowMonth = now.strftime('%m')
+    nowDay = now.strftime('%d')
+
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    today_db = cur.execute('SELECT today from day').fetchone()
+    arr = today_db[0].split('-', 2)
+    if nowDate == today_db[0]:
+        con.close()
+        return 0
+    db_prior = priority(arr)
+    to_prior = priority(nowDate.split('-', 2))
+    cur.execute('UPDATE day SET today=\''+nowDate+'\' WHERE key_=1')
+    con.commit()
+    con.close()
+    if to_prior-db_prior >= 3:
+        return 3
+    elif to_prior-db_prior == 2:
+        return 2
+    else:
+        return 1
+
+def timetable_into_arr():
+    con =sqlite3.connect('sqlite.db')
+    cur =con.cursor()
+    arr00 = cur.execute('SELECT * FROM Room0_timetable0').fetchone()
+    arr01 = cur.execute('SELECT * FROM Room0_timetable1').fetchone()
+    arr02 = cur.execute('SELECT * FROM Room0_timetable2').fetchone()
+    arr10 = cur.execute('SELECT * FROM Room1_timetable0').fetchone()
+    arr11 = cur.execute('SELECT * FROM Room1_timetable1').fetchone()
+    arr12 = cur.execute('SELECT * FROM Room1_timetable2').fetchone()
+    arr = [arr00, arr01, arr02, arr10, arr11, arr12]
+    logging.error(arr[0])
+    con.close()
+    return arr
+
+

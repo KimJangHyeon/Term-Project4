@@ -2,6 +2,7 @@
 from __future__ import with_statement
 from flask import Flask, flash, session, request, redirect, url_for, render_template, g
 import sqlite3
+import datetime
 import os
 import urllib2
 from flask_socketio import SocketIO, send
@@ -82,6 +83,9 @@ def id_into_name(uid):
 def go_signup():
     return render_template('signup.html')
 
+@app.route("/gosignin", method=['GET', 'POST'])
+def go_signin():
+    return render_template('signin.html')
 
 # sign up 에서 sign up 버튼을 누른 경우
 @app.route("/", methods=['GET', 'POST'])
@@ -156,7 +160,9 @@ def signin():
             error='id와 pw가 일치하지 않습니다'
             return render_template('signin.html', error=error)
         else:
-            return render_template('reserve.html', uid = id)
+            now = datetime.datetime.now()
+            nowDate = now.strftime('%Y-%m-%d')
+            return render_template('reserve.html', uid = id, date = nowDate, arr=functions.timetable_into_arr())
 
 # mypage 실행
 @app.route("/mypage")
@@ -183,34 +189,37 @@ def go_mypage(id):
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
-    start = int(request.form('start'))
-    time = int(request.form('time'))
+    cycle = functions.day_reset()
+    for i in range(0, cycle):
+        functions.day_changed()
+
+    start = int(request.form['start'])
+    time = int(request.form['time'])
     end = time/30 - 1 + start
     if end>27:
         error='최대시간을 초과했습니다'
         return render_template('reserve.html', error=error)
-    logging.error(start + "sdfkljsdlf" + time)
-    #
-    # id = request.form('uid')
-    # user_dic = functions.infrom_by_id(id)
-    # #예약가능 횟수:0
-    # if user_dic['check']==0:
-    #     error = '오늘은 더 이상 예약안됨'
-    #     return render_template('reserve.html', uid=id, error=error)
-    #
-    # if request.method == 'POST':
-    #     room = request.form('room')
-    #     day = request.form('day')
-    #     already_reserved = functions.already_reserved(room, day, start, end+1)
-    #     #이미 예약된 경우
-    #     if already_reserved:
-    #         error = '이미 예약이 되어 있음'
-    #         return render_template('reserve.html', uid=id, error=error)
-    #     #예약을 하는 경우
-    #     for i in range(start, end +1):
-    #         functions.booking_room(room, day, str(i), str(user_dic['name']))
-    #     functions.user_check(id, 0)
-    #     return render_template('mypage.html', uid=id)
+
+    id = request.form('uid')
+    user_dic = functions.infrom_by_id(id)
+    #예약가능 횟수:0
+    if user_dic['check'] == 0:
+        error = '오늘은 더 이상 예약안됨'
+        return render_template('reserve.html', uid=id, error=error)
+
+    if request.method == 'POST':
+        room = request.form('room')
+        day = request.form('day')
+        already_reserved = functions.already_reserved(room, day, start, end+1)
+        #이미 예약된 경우
+        if already_reserved:
+            error = '이미 예약이 되어 있음'
+            return render_template('reserve.html', uid=id, error=error)
+        #예약을 하는 경우
+        for i in range(start, end +1):
+            functions.booking_room(room, day, str(i), str(user_dic['name']))
+        functions.user_check(id, 0)
+        return render_template('mypage.html', uid=id)
 
 #id로 login 하기
 if __name__ == "__main__":
