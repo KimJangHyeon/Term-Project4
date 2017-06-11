@@ -115,17 +115,65 @@ def day_changed():
         cur.execute('UPDATE Room1_timetable1 SET name=\'' + name_3[0] + '\' WHERE time = \'t_' + str(i) + '\'')
 
         cur.execute('UPDATE Room1_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
+        con.commit()
+        con.close()
     return
+
+def month(mon):
+    if mon=='01':
+        return 31
+    if mon == '02':
+        return 28
+    if mon == '03':
+        return 31
+    if mon == '04':
+        return 30
+    if mon == '05':
+        return 31
+    if mon == '06':
+        return 30
+    if mon == '07':
+        return 31
+    if mon == '08':
+        return 31
+    if mon == '09':
+        return 30
+    if mon == '10':
+        return 31
+    if mon == '11':
+        return 30
+    if mon == '12':
+        return 31
+
+
+def priority(arr):
+    return int(arr[0])*365 + month(arr[1]) + int(arr[2])
 
 def day_reset():
     now = datetime.datetime.now()
     nowDate = now.strftime('%Y-%m-%d')
+    nowYear = now.strftime('%Y')
+    nowMonth = now.strftime('%m')
+    nowDay = now.strftime('%d')
 
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
     today_db = cur.execute('SELECT today from day').fetchone()
-    if nowDate!=today_db[0]:
-        cur.execute('UPDATE day SET today=\''+today_db[0]+'\' WHERE key_=1')
+    arr = today_db[0].split('-', 2)
+    if nowDate == today_db[0]:
+        con.close()
+        return 0
+    db_prior = priority(arr)
+    to_prior = priority(nowDate.split('-', 2))
+    cur.execute('UPDATE day SET today=\''+nowDate+'\' WHERE key_=1')
+    con.commit()
     con.close()
-    return
+    if to_prior-db_prior >= 3:
+        return 3
+    elif to_prior-db_prior == 2:
+        return 2
+    else:
+        return 1
+
+
 

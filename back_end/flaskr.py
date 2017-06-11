@@ -49,7 +49,6 @@ def render_redirect(template, url, error):
 @app.route("/")
 def home():
     functions.initialize_db()
-    functions.day_reset()
     #functions.initialize_time()
     return render_template('signin.html')
 
@@ -185,6 +184,10 @@ def go_mypage(id):
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
+    cycle = functions.day_reset()
+    for i in range(0, cycle):
+        functions.day_changed()
+
     start = int(request.form['start'])
     time = int(request.form['time'])
     end = time/30 - 1 + start
