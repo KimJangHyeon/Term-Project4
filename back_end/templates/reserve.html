@@ -113,12 +113,12 @@
                         </div>
                     </div>
                 </div>
-                <form id="reserve_input" method="post">
+                <form id="reserve_input" method="post" action={{ url_for('btn_reserve') }}>
                     <input type="hidden" name="hiddenvalue" value='reserve'>
                     <div id="wrapper_reserve_form" class="box">
                         <p>시작시간</p>
-                        <select class="selector_border" name="start">
-                            <option>08:00</option>
+                        <select class="selector_border" name="start" required>
+                            <option value="0">08:00</option>
                             <option>08:30</option>
                             <option>09:00</option>
                             <option>09:30</option>

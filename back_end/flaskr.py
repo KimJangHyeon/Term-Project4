@@ -47,6 +47,8 @@ def render_redirect(template, url, error):
 
 @app.route("/")
 def home():
+    functions.initialize_db()
+    #functions.initialize_time()
     return render_template('signin.html')
 
 
@@ -107,7 +109,7 @@ def signup():
             # sign up 성공
             if error == None:
                 logging.error('enter error == None')
-                cur.execute('INSERT INTO userdata (id, username, password) VALUES (?, ?, ?)', [id, pw, name])
+                cur.execute('INSERT INTO userdata (id, password, username, check_ ) VALUES (?, ?, ?, ?)', [id, pw, name, 1])
                 con.commit()
                 con.close()
                 return render_template('signin.html')
@@ -173,12 +175,37 @@ def go_mypage(id):
     #     {'room_num': 0, 'date': '170607', 'start': '08:00', 'end': '09:00'},
     #     {'room_num': 1, 'date': '170607', 'start': '08:00', 'end': '09:00'},
     #     {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'},
+    #     {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'}
     # ]
     # reuturn render_template('mypage.html', user = arr, reserved = arr)
     con.close()
     return render_template('mypage.html', userid=id, reserved=arr)
 
+@app.route("/mypage", methods=['GET', 'POST'])
+def btn_reserve():
+    start = request.form('start')
+    time = request.form('time')
+    logging.error(start + "sdfkljsdlf" + time)
+    #
+    # id = request.form('uid')
+    # user_dic = functions.infrom_by_id(id)
+    # if user_dic['check']==0:
+    #     error = '오늘은 더 이상 예약안됨'
+    #     return render_template('reserve.html', uid=id, error=error)
+    #
+    # if request.method == 'POST':
+    #     room = request.form('room')
+    #     day = request.form('day')
+    #     already_reserved = functions.already_reserved(room, day, request.form('start_time'), request.form('end_time')+1)
+    #     #이미 예약된 경우
+    #     if already_reserved:
+    #         error = '이미 예약이 되어 있음'
+    #         return render_template('reserve.html', error=error)
+    #     #예약을 하는 경우
+    #     for i in range(request.form('start_time'), request.form('end_time')+1):
+    #         functions.booking_room(str(room), str(day), str(i), str(user_dic['name']))
+    #     functions.user_check(id, 0)
+    #     return render_template('mypage.html', uid=id)
 
 #id로 login 하기
 if __name__ == "__main__":
