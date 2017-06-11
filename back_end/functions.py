@@ -94,7 +94,3 @@ def day_changed():
     cur = con.cursor()
     #유저 check 1로 전환
     cur.execute('UPDATE userdata SET check_ = 1 WHERE idn >= 1')
-
-    #timetable 전환
-    for i in range(0,28)
-    cur.execute('UPDATE Room0_timetable0 SET ')

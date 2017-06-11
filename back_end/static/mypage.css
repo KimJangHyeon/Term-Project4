@@ -13,7 +13,7 @@
 
 #background {
     position: absolute;
-    background-image: url("../public/images/background.jpg");
+    background-image: url("../static/public/images/background.jpg");
     background-size: 121%;
     background-repeat: no-repeat;
     top: 0;
