@@ -10,10 +10,9 @@
         }
     </style>
 
-    <link rel="stylesheet" type="text/css" href="../stylesheet/header.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheet/reserve.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheet/graph.css">
-    <script type="text/javascript" src="../scripts/reserve.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/header.css">
+    <link rel="stylesheet" type="text/css" href="../static/reserve.css">
+    <link rel="stylesheet" type="text/css" href="../static/graph.css">
 </head>
 
 <body>
@@ -24,7 +23,7 @@
     <div id="header_tool_bar">
         <div class="container">
             <div id="logo">
-                <img id="logo_img" src="../public/images/logo_header.png" />
+                <img id="logo_img" src="../static/public/images/logo_header.png" />
             </div>
             <form id="logo_form" method="post" action="index.jsp">
                 <input type="hidden" name="hiddenvalue" value='go_reserve'>
@@ -56,6 +55,12 @@
                     <a class="button--left" onclick="move(-1)"></a>
                     <a class="button--right" onclick="move(1)"></a>
             </div>
+            <div id="room">
+                <a id="comment_room"> 지금 보고 있는 화면은 0번방 예약 화면입니다 바꿀려면 "방 바꾸기"를 눌러 </a>
+                <br>
+                <a onclick="change_room()"> 방 바꾸기 </a>
+            </div>
+
             <div id="show_reserve">
                 <h2>오늘의 예약 시간</h2>
                 <div id="show_reserve_default_time">
@@ -75,37 +80,7 @@
                                 <h3>08:00</h3>
                             </div>
                             <div id="content_graph">
-                                <ul class="chart-skills">
-                                    <li title="08:00 ~ 08:30" style="border-color: #ff0000"><span></span></li>
-                                    <li title="08:30 ~ 09:00"><span></span></li>
-                                    <li title="09:00 ~ 09:30"><span></span></li>
-                                    <li title="09:30 ~ 10:00"><span></span></li>
-                                    <li title="10:00 ~ 10:30" style="border-color: #00ff00"><span></span></li>
-                                    <li title="10:30 ~ 11:00" style="border-color: #00ff00"><span></span></li>
-                                    <li title="11:00 ~ 11:30"><span></span></li>
-                                    <li title="11:30 ~ 12:00"><span></span></li>
-                                    <li title="12:00 ~ 12:30"><span></span></li>
-                                    <li title="12:30 ~ 13:00"><span></span></li>
-                                    <li title="13:00 ~ 13:30"><span></span></li>
-                                    <li title="13:30 ~ 14:00"><span></span></li>
-                                    <li title="14:00 ~ 14:30"><span></span></li>
-                                    <li title="14:30 ~ 15:00"><span></span></li>
-                                    <li title="15:00 ~ 15:30"><span></span></li>
-                                    <li title="15:30 ~ 16:00"><span></span></li>
-                                    <li title="16:00 ~ 16:30"><span></span></li>
-                                    <li title="16:30 ~ 17:00"><span></span></li>
-                                    <li title="17:00 ~ 17:30"><span></span></li>
-                                    <li title="17:30 ~ 18:00"><span></span></li>
-                                    <li title="18:00 ~ 18:30"><span></span></li>
-                                    <li title="18:30 ~ 19:00"><span></span></li>
-                                    <li title="19:00 ~ 19:30"><span></span></li>
-                                    <li title="19:30 ~ 20:00"><span></span></li>
-                                    <li title="20:00 ~ 20:30"><span></span></li>
-                                    <li title="20:30 ~ 21:00"><span></span></li>
-                                    <li title="21:00 ~ 21:30"><span></span></li>
-                                    <li title="21:30 ~ 22:00"><span></span></li>
 
-                                </ul>
                             </div>
                             <div id="right_side_graph">
                                 <h3>22:00</h3>
@@ -165,6 +140,119 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+
+    var i_day = 0;
+    var i_room = 0;
+
+    // 0 오늘 1 내일 2 모래
+    var arr_day0_room0 = [
+        "1","","","","","","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+    var arr_day1_room0 = [
+        "","2","","","","","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+    var arr_day2_room0 = [
+        "","","3","","","","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+    var arr_day0_room1 = [
+        "","","","4","","","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+    var arr_day1_room1 = [
+        "","","","","5","","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+    var arr_day2_room1 = [
+        "","","","","","6","",
+        "","","","","","","",
+        "","","","","","","",
+        "","","","","","",""];
+
+
+    var move = function(delta) {
+        i_day += delta;
+        if (i_day < 0 || i_day > 2) {
+            i_day -= delta;
+            alert("거긴 못가!");
+        } else {
+            show_graph_day_room();
+        }
+    };
+
+    var change_room = function(){
+        if (i_room === 0) i_room = 1;
+        else i_room = 0;
+        document.getElementById("comment_room").innerHTML =
+            "지금 보고 있는 화면은 " + i_room + "번방 예약 화면입니다 바꿀려면 \"방 바꾸기\"를 눌러";
+        show_graph_day_room();
+    };
+
+    var show_graph_day_room = function () {
+        if (i_day === 0) {
+            if (i_room === 0) {
+                show_graph(arr_day0_room0);
+            } else if (i_room === 1) {
+                show_graph(arr_day0_room1);
+            }
+        } else if (i_day === 1) {
+            if (i_room === 0) {
+                show_graph(arr_day1_room0);
+            } else if (i_room === 1) {
+                show_graph(arr_day1_room1);
+            }
+        } else if (i_day === 2) {
+            if (i_room === 0) {
+                show_graph(arr_day2_room0);
+            } else if (i_room === 1) {
+                show_graph(arr_day2_room1);
+            }
+        }
+    };
+
+    var show_graph = function(arr) {
+        var graph_innerHTML = "";
+        graph_innerHTML += "<ul class=\"chart-skills\">";
+
+        for (var i = 0; i < 28; i++) {
+            if (arr[i] === "") {
+                graph_innerHTML +=
+                    "<li title=\""
+                    + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
+                    + (Math.floor((i+1)/2)+8) + ":" + (Math.floor(i+1)%2)*30 + "\""
+                    + "><span></span></li>";
+                //style="border-color: #00ff00"
+            } else {
+                graph_innerHTML +=
+                    "<li title=\""
+                    + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
+                    + (Math.floor((i+1)/2)+8) + ":" + (Math.floor(i+1)%2)*30 + "\""
+                    + "style=\"border-color: #00ff00\""
+                    + "><span></span></li>";
+
+            }
+        }
+
+        document.getElementById("content_graph").innerHTML = graph_innerHTML;
+    };
+    // 초기화 할꺼
+    show_graph(arr_day0_room0);
+</script>
+
 
 </body>
 </html>
