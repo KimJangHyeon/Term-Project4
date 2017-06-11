@@ -175,5 +175,18 @@ def day_reset():
     else:
         return 1
 
+def timetable_into_arr():
+    con =sqlite3.connect('sqlite.db')
+    cur =con.cursor()
+    arr00 = cur.execute('SELECT * FROM Room0_timetable0').fetchone()
+    arr01 = cur.execute('SELECT * FROM Room0_timetable1').fetchone()
+    arr02 = cur.execute('SELECT * FROM Room0_timetable2').fetchone()
+    arr10 = cur.execute('SELECT * FROM Room1_timetable0').fetchone()
+    arr11 = cur.execute('SELECT * FROM Room1_timetable1').fetchone()
+    arr12 = cur.execute('SELECT * FROM Room1_timetable2').fetchone()
+    arr = [arr00, arr01, arr02, arr10, arr11, arr12]
+    logging.error(arr[0])
+    con.close()
+    return arr
 
 
