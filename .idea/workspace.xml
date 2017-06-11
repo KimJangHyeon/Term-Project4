@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fb7a85b-defb-4f06-8817-dfb7d4bd1f52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/back_end/static/scripts/reserve_test1.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/back_end/scripts/reserve.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back_end/static/reserve.css" afterPath="$PROJECT_DIR$/back_end/static/reserve.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back_end/templates/reserve.html" afterPath="$PROJECT_DIR$/back_end/templates/reserve.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Term_Project4$flaskr.coverage" NAME="flaskr Coverage Results" MODIFIED="1497182605115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/back_end" />
+    <SUITE FILE_PATH="coverage/Term_Project4$flaskr.coverage" NAME="flaskr Coverage Results" MODIFIED="1497182786793" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/back_end" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -63,13 +60,13 @@
       <file leaf-file-name="reserve.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/back_end/templates/reserve.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="190" column="22" lean-forward="true" selection-start-line="190" selection-start-column="22" selection-end-line="190" selection-end-column="22" />
+            <state relative-caret-position="209">
+              <caret line="204" column="25" lean-forward="false" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
               <folding>
-                <element signature="e#5785#5907#0#HTML" expanded="false" />
-                <element signature="e#5935#6057#0#HTML" expanded="false" />
-                <element signature="e#6085#6207#0#HTML" expanded="false" />
-                <element signature="e#6235#6357#0#HTML" expanded="false" />
+                <element signature="e#5803#5925#0#HTML" expanded="false" />
+                <element signature="e#5953#6075#0#HTML" expanded="false" />
+                <element signature="e#6103#6225#0#HTML" expanded="false" />
+                <element signature="e#6253#6375#0#HTML" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -674,10 +671,10 @@
         <state relative-caret-position="1210">
           <caret line="55" column="31" lean-forward="false" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
           <folding>
-            <element signature="e#5785#5907#0#HTML" expanded="false" />
-            <element signature="e#5935#6057#0#HTML" expanded="false" />
-            <element signature="e#6085#6207#0#HTML" expanded="false" />
-            <element signature="e#6235#6357#0#HTML" expanded="false" />
+            <element signature="e#5803#5925#0#HTML" expanded="false" />
+            <element signature="e#5953#6075#0#HTML" expanded="false" />
+            <element signature="e#6103#6225#0#HTML" expanded="false" />
+            <element signature="e#6253#6375#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -755,10 +752,10 @@
         <state relative-caret-position="2640">
           <caret line="120" column="41" lean-forward="false" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="41" />
           <folding>
-            <element signature="e#5785#5907#0#HTML" expanded="false" />
-            <element signature="e#5935#6057#0#HTML" expanded="false" />
-            <element signature="e#6085#6207#0#HTML" expanded="false" />
-            <element signature="e#6235#6357#0#HTML" expanded="false" />
+            <element signature="e#5803#5925#0#HTML" expanded="false" />
+            <element signature="e#5953#6075#0#HTML" expanded="false" />
+            <element signature="e#6103#6225#0#HTML" expanded="false" />
+            <element signature="e#6253#6375#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -840,10 +837,10 @@
         <state relative-caret-position="1541">
           <caret line="67" column="32" lean-forward="false" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="32" />
           <folding>
-            <element signature="e#5785#5907#0#HTML" expanded="false" />
-            <element signature="e#5935#6057#0#HTML" expanded="false" />
-            <element signature="e#6085#6207#0#HTML" expanded="false" />
-            <element signature="e#6235#6357#0#HTML" expanded="false" />
+            <element signature="e#5803#5925#0#HTML" expanded="false" />
+            <element signature="e#5953#6075#0#HTML" expanded="false" />
+            <element signature="e#6103#6225#0#HTML" expanded="false" />
+            <element signature="e#6253#6375#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -911,10 +908,10 @@
         <state relative-caret-position="828">
           <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
-            <element signature="e#5785#5907#0#HTML" expanded="false" />
-            <element signature="e#5935#6057#0#HTML" expanded="false" />
-            <element signature="e#6085#6207#0#HTML" expanded="false" />
-            <element signature="e#6235#6357#0#HTML" expanded="false" />
+            <element signature="e#5803#5925#0#HTML" expanded="false" />
+            <element signature="e#5953#6075#0#HTML" expanded="false" />
+            <element signature="e#6103#6225#0#HTML" expanded="false" />
+            <element signature="e#6253#6375#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1131,13 +1128,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/back_end/templates/reserve.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="190" column="22" lean-forward="true" selection-start-line="190" selection-start-column="22" selection-end-line="190" selection-end-column="22" />
+        <state relative-caret-position="209">
+          <caret line="204" column="25" lean-forward="false" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
           <folding>
-            <element signature="e#5785#5907#0#HTML" expanded="false" />
-            <element signature="e#5935#6057#0#HTML" expanded="false" />
-            <element signature="e#6085#6207#0#HTML" expanded="false" />
-            <element signature="e#6235#6357#0#HTML" expanded="false" />
+            <element signature="e#5803#5925#0#HTML" expanded="false" />
+            <element signature="e#5953#6075#0#HTML" expanded="false" />
+            <element signature="e#6103#6225#0#HTML" expanded="false" />
+            <element signature="e#6253#6375#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -56,7 +56,7 @@
                     <a class="button--right" onclick="move(1)"></a>
             </div>
             <div id="room">
-                <a> 지금 보고 있는 화면은 0번방 예약 화면입니다 바꿀려면 "방 바꾸기"를 눌러 </a>
+                <a id="comment_room"> 지금 보고 있는 화면은 0번방 예약 화면입니다 바꿀려면 "방 바꾸기"를 눌러 </a>
                 <br>
                 <a onclick="change_room()"> 방 바꾸기 </a>
             </div>
@@ -197,6 +197,8 @@
     var change_room = function(){
         if (i_room === 0) i_room = 1;
         else i_room = 0;
+        document.getElementById("comment_room").innerHTML =
+            "지금 보고 있는 화면은 " + i_room + "번방 예약 화면입니다 바꿀려면 \"방 바꾸기\"를 눌러";
         show_graph_day_room();
     };
 
