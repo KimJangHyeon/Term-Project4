@@ -42,7 +42,7 @@ def initialize_db():
 def initialize_time():
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
-    for i in range(0, 26):
+    for i in range(0, 28):
         cur.execute("INSERT INTO Room0_timetable0(time, name) VALUES (?, ?)", ['t_' + str(i), 'NULL'])
         cur.execute("INSERT INTO Room0_timetable1(time, name) VALUES (?, ?)", ['t_' + str(i), 'NULL'])
         cur.execute("INSERT INTO Room0_timetable2(time, name) VALUES (?, ?)", ['t_' + str(i), 'NULL'])
@@ -87,3 +87,14 @@ def already_reserved(room, date, start_time, end_time):
             break
     con.close()
     return already
+
+#날짜가 바뀌면 room과 유저 update
+def day_changed():
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    #유저 check 1로 전환
+    cur.execute('UPDATE userdata SET check_ = 1 WHERE idn >= 1')
+
+    #timetable 전환
+    for i in range(0,28)
+    cur.execute('UPDATE Room0_timetable0 SET ')
