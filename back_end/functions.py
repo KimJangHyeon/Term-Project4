@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-
+import datetime
+import logging
 def initialize_db():
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
@@ -35,6 +36,8 @@ def initialize_db():
     	password TEXT NOT NULL, 
     	check_ INTEGER
         );'''
+    cur.execute(sql)
+    sql = "CREATE TABLE IF NOT EXISTS day(key_ INTEGER, today TEXT);"
     cur.execute(sql)
     con.commit()
     con.close()
@@ -82,7 +85,7 @@ def already_reserved(room, date, start_time, end_time):
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
     for i in range(start_time, end_time+1):
-        if cur.execute('SELECT name FROM Room'+room+'_timetable'+date+' where time = t_'+str(i)).fetchone()[0] != 'NULL':
+        if cur.execute('SELECT name FROM Room'+room+'_timetable'+date+' where time = \'t_'+str(i)+'\'').fetchone()[0] != 'NULL':
             already = 1
             break
     con.close()
@@ -96,5 +99,33 @@ def day_changed():
     cur.execute('UPDATE userdata SET check_ = 1 WHERE idn >= 1')
 
     #timetable 전환
-    for i in range(0,28)
-    cur.execute('UPDATE Room0_timetable0 SET ')
+    for i in range(0,28):
+        name_0 = cur.execute('SELECT name from Room0_timetable1 WHERE time=\'t_'+str(i)+'\'').fetchone()
+        cur.execute('UPDATE Room0_timetable0 SET name=\'' + name_0[0] + '\' WHERE time = \'t_'+str(i)+'\'')
+
+        name_1 = cur.execute('SELECT name from Room0_timetable2 WHERE time=\'t_' + str(i) + '\'').fetchone()
+        cur.execute('UPDATE Room0_timetable1 SET name=\'' + name_1[0] + '\' WHERE time = \'t_' + str(i) + '\'')
+
+        cur.execute('UPDATE Room0_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
+
+        name_2 = cur.execute('SELECT name from Room1_timetable1 WHERE time=\'t_'+str(i)+'\'').fetchone()
+        cur.execute('UPDATE Room1_timetable0 SET name=\'' + name_2[0] + '\' WHERE time = \'t_'+str(i)+'\'')
+
+        name_3 = cur.execute('SELECT name from Room1_timetable2 WHERE time=\'t_' + str(i) + '\'').fetchone()
+        cur.execute('UPDATE Room1_timetable1 SET name=\'' + name_3[0] + '\' WHERE time = \'t_' + str(i) + '\'')
+
+        cur.execute('UPDATE Room1_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
+    return
+
+def day_reset():
+    now = datetime.datetime.now()
+    nowDate = now.strftime('%Y-%m-%d')
+
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    today_db = cur.execute('SELECT today from day').fetchone()
+    if nowDate!=today_db[0]:
+        cur.execute('UPDATE day SET today=\''+today_db[0]+'\' WHERE key_=1')
+    con.close()
+    return
+

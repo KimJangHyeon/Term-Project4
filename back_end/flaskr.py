@@ -2,6 +2,7 @@
 from __future__ import with_statement
 from flask import Flask, flash, session, request, redirect, url_for, render_template, g
 import sqlite3
+import datetime
 import os
 import urllib2
 from flask_socketio import SocketIO, send
@@ -48,6 +49,7 @@ def render_redirect(template, url, error):
 @app.route("/")
 def home():
     functions.initialize_db()
+    functions.day_reset()
     #functions.initialize_time()
     return render_template('signin.html')
 
@@ -183,8 +185,8 @@ def go_mypage(id):
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
-    start = int(request.form('start'))
-    time = int(request.form('time'))
+    start = int(request.form['start'])
+    time = int(request.form['time'])
     end = time/30 - 1 + start
     if end>27:
         error='최대시간을 초과했습니다'
