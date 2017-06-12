@@ -48,35 +48,10 @@ def render_redirect(template, url, error):
 
 @app.route("/")
 def home():
+    functions.timetable_into_arr()
     functions.initialize_db()
     #functions.initialize_time()
     return render_template('signin.html')
-
-
-
-
-# 예약 취소
-def lab_cancel():
-    # 시간표 db에서 같은 id를 가진 경우 전부 null로 초기화
-    # return render_template("mypage.html", user = arr, reserved = arr)
-    return
-
-
-# 예약
-def lab_book():
-    # 시간표 db에서 선택한 시간대에 null이 아닌 것이 있는지 확인
-    # 있다면 에러 출력
-    # 없으면 null에 id입력
-    # return render_template("mypage.html", user = arr, reserved = arr)
-    return
-
-
-# id를 이름으로 (parameter:id, return: name)
-def id_into_name(uid):
-    # 유저 db에서 id를 찾아 이름을 return
-    # return name
-    return
-
 
 # sign up page 실행
 @app.route("/signup", methods=['GET', 'POST'])
@@ -90,6 +65,7 @@ def go_signin():
 # sign up 에서 sign up 버튼을 누른 경우
 @app.route("/", methods=['GET', 'POST'])
 def signup():
+    logging.error('signup들어옴')
     error = None
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
@@ -105,9 +81,10 @@ def signup():
 
         else:
             id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
-
+            logging.error(id_[0])
             # id 중복
             if (id_[0] != 0):
+                logging.error('아이디 중복')
                 error = 'Same ID Exists'
             # sign up 성공
             if error == None:
@@ -116,6 +93,7 @@ def signup():
                 con.close()
                 return render_template('signin.html')
 
+            logging.error('아이디중복2')
 
             return render_template('signup.html', error=error)
     else:
@@ -162,8 +140,9 @@ def signin():
             return render_template('reserve.html', uid = id, date = nowDate, arr=functions.timetable_into_arr())
 
 # mypage 실행
-@app.route("/mypage")
-def go_mypage(id):
+@app.route("/mypagee", methods=['GET', 'POST'])
+def go_mypage():
+    logging.error("dsfkljsdklfjlsdkjf")
     # 시간표 db에서 같은 아이디의 사람을 {'room_num', 'date', 'start', 'end'} 를 불러오는 arr 생성 및 넘겨주기
     # id에 해당하는 유저의 정보를 user db에서 넘겨주기
     con = sqlite3.connect('sqlite.db')
@@ -186,6 +165,7 @@ def go_mypage(id):
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
+    logging.error('reserve 함수 실행')
     cycle = functions.day_reset()
     for i in range(0, cycle):
         functions.day_changed()
@@ -203,6 +183,7 @@ def btn_reserve():
     user_dic = functions.infrom_by_id(id)
     #예약가능 횟수:0
     if user_dic['check'] == 0:
+        logging.error('오늘은 더 이상 예약 불가')
         error = '오늘은 더 이상 예약안됨'
         return render_template('reserve.html', uid=id, error=error)
 
@@ -212,12 +193,15 @@ def btn_reserve():
         already_reserved = functions.already_reserved(room, day, start, end+1)
         #이미 예약된 경우
         if already_reserved:
+            logging.error('이미 예약된 시간')
             error = '이미 예약이 되어 있음'
             return render_template('reserve.html', uid=id, error=error)
         #예약을 하는 경우
+        logging.error("예약하기 들어감")
         for i in range(start, end +1):
             functions.booking_room(room, day, str(i), str(user_dic['name']))
         functions.user_check(id, 0)
+        logging.error('마이페이지로!!')
         return render_template('mypage.html', uid=id)
 
 #id로 login 하기

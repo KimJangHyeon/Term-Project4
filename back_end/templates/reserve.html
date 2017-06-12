@@ -147,12 +147,15 @@
     var i_room = 0;
 
     // 0 오늘 1 내일 2 모래
-    var arr_day0_room0 = [
-        "1","","","","","","",
-        "","","","","","","",
+    var arr_day0_room0 = '{{ arr[0] }}';
+    console.log(arr_day0_room0);
+
+        /*[
+        "이름","","","","","","",
+        "","","","","이름2","이름2","",
         "","","","","","","",
         "","","","","","",""];
-
+*/
     var arr_day1_room0 = [
         "","2","","","","","",
         "","","","","","","",
@@ -227,9 +230,10 @@
     var show_graph = function(arr) {
         var graph_innerHTML = "";
         graph_innerHTML += "<ul class=\"chart-skills\">";
-
+        console.log(arr);
         for (var i = 0; i < 28; i++) {
-            if (arr[i] === "") {
+            console.log(arr[0][i]);
+            if (arr[0][i][1] === "NULL") {
                 graph_innerHTML +=
                     "<li title=\""
                     + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "

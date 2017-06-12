@@ -27,25 +27,25 @@
     </div>
 </div>
 
-<div id="sign_in">
-    <div id="background"/>
+    <div id="sign_in">
+        <div id="background"/>
+        {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+        <div id="signup_content" class="content">
+            <div id="wrapper_login_form" class="box">
 
-    <div id="signup_content" class="content">
-        <div id="wrapper_login_form" class="box">
-
-            <form id="login_form" method="post" action="{{ url_for('signin') }}">
-                <a>예약 시스템에 로그인합니다</a>
-                <input type="hidden" name="hiddenvalue" value='signin'>
-                <br>
-                <label for="uid">ID</label>
-                <input class="input_border" type="text" name="uid" id="uid"><br>
-                <label for="pw">Password</label>
-                <input class="input_border" type="password" name="pw"id="pw"><br><br>
-                <input class="btn btn-blue" type="submit" value="Sign In">
-            </form>
+                <form id="login_form" method="post" action="{{ url_for('signin') }}">
+                    <a>예약 시스템에 로그인합니다</a>
+                    <input type="hidden" name="hiddenvalue" value='signin'>
+                    <br>
+                    <label for="uid">ID</label>
+                    <input class="input_border" type="text" name="uid" id="uid"><br>
+                    <label for="pw">Password</label>
+                    <input class="input_border" type="password" name="pw"id="pw"><br><br>
+                    <input class="btn btn-blue" type="submit" value="Sign In">
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
