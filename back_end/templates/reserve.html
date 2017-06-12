@@ -211,11 +211,68 @@
         }
     };
 
-    var show_graph = function(arr) {
+    var show_graph = function(my_arr) {
+
+        var eachColor = [];
+        var colorArr = [
+                "#F7567C",
+                "#0B5563",
+                "#E5D0E3",
+                "#84D2F6",
+                "#E0B0D5",
+                "#DDFFF7",
+                "#FFA69E",
+                "#AA4465",
+                "#84D2F6",
+                "#462255",
+
+                "#EAC5D8",
+                "#DBD8F0",
+                "#E2FADB",
+                "#84D2F6",
+                "#DBEFBC",
+                "#963484",
+                "#3066BE",
+                "#28C2FF",
+                "#84D2F6",
+                "#2AF5FF",
+
+                "#FCFCFC",
+                "#E7E5E5",
+                "#FFFAE3",
+                "#84D2F6",
+                "#5D576B",
+                "#BEB8EB",
+                "#5299D3",
+                "#0B5563",
+        ];
+
+
+        var cnt = -1;
+        var past = "";
+
+
+        for (var iSchedule = 0; iSchedule < 28; iSchedule++) {
+            if (my_arr[iSchedule] !== " ") {
+                // arr중에 겹쳤다면 cnt는 안더해줘도 되고 컬러만 바꿔줌
+                if (past === my_arr[iSchedule]) {
+
+                } else {
+                    cnt++;
+                }
+                // list iSchedule 번째를 color 로 색칠
+                eachColor[iSchedule] = colorArr[cnt];
+
+                past = my_arr[iSchedule];
+            } else {
+                eachColor[iSchedule] = "#FFFFFF";
+            }
+        }
+
         var graph_innerHTML = "";
         graph_innerHTML += "<ul class=\"chart-skills\">";
         for (var i = 0; i < 28; i++) {
-            if (arr[i] === " ") {
+            if (my_arr[i] === " ") {
                 graph_innerHTML +=
                     "<li title=\""
                     + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
@@ -227,7 +284,7 @@
                     "<li title=\""
                     + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
                     + (Math.floor((i+1)/2)+8) + ":" + (Math.floor(i+1)%2)*30 + "\""
-                    + "style=\"border-color: #E0E0E0\""
+                    + "style=\"border-color: " + eachColor[i] + "\""
                     + "><span></span></li>";
 
             }
