@@ -23,13 +23,13 @@
             <div id="logo">
                 <img id="logo_img" src="../static/public/images/logo_header.png" />
             </div>
-            <form id="logo_form" method="post" action="{{ url_for('signup') }}">
-                <input type="hidden" name="hiddenvalue" value='go_reserve'>
+            <form id="logo_form" method="post" action="{{ url_for('go_reserved') }}">
+                <input type="hidden" name="uid" value='{{ uid }}'>
                 <p id="logo_txt" onclick="document.getElementById('logo_form').submit()">예약 시스템</p>
             </form>
 
-            <form id="mypage_form" method="post" action="index.jsp">
-                <input type="hidden" name="hiddenvalue" value='go_mypage'>
+            <form id="mypage_form" method="post" action="{{ url_for('go_mypage') }}">
+                <input type="hidden" name="uid" value={{ uid }}>
                 <p id="mypage_txt" onclick="document.getElementById('mypage_form').submit()">My Page</p>
             </form>
 
@@ -56,16 +56,24 @@
             </tr>
             </thead>
             <tbody>
-
-            {% for l in reserved %}
+            {% if reserved != "" %}
+            {% for tmp_reserved in reserved %}
             <tr>
-                <th scope="row"> {{ l.date }} </th>
-                <td> {{ l.room_num }} </td>
-                <td> {{ l.start }} </td>
-                <td> {{ l.end }} </td>
-                <td>삭제</td>
+                <td id="date"> {{ tmp_reserved[0] }} </td>
+                <td id="room_num"> {{ tmp_reserved[1] }} </td>
+                <td id="start"> {{ tmp_reserved[2] }} </td>
+                <td id="end"> {{ tmp_reserved[3] }} </td>
+
+                <form id="delete_reserved_form" method="post" action="{{ url_for('btn_delete') }}">
+                    <input type="hidden" name="uid" value='{{ uid }}'>
+                    <input type="hidden" name="date" value='{{ tmp_reserved[0] }}'>
+                    <td id="delete"><p id="delete_txt" onclick="document.getElementById('delete_reserved_form').submit()">삭제하기</p></td>
+                </form>
+
+
             </tr>
             {% endfor %}
+            {% endif %}
 
             </tbody>
         </table>
@@ -74,4 +82,5 @@
 
 </div>
 </body>
+
 </html>

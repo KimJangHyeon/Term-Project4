@@ -3,6 +3,9 @@ import sqlite3
 import datetime
 import logging
 import unicodedata
+
+import math
+
 def initialize_db():
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
@@ -228,37 +231,38 @@ def timetable_into_arr():
 def load_reserved_data(name):
     gathered_data = []
 
-    reserved_data = get_reserved_data('Room0_timetable0', name, 0)
+    reserved_data = get_reserved_data('Room0_timetable0', name, 0, 0)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
-    reserved_data = get_reserved_data('Room0_timetable1', name, 1)
+    reserved_data = get_reserved_data('Room0_timetable1', name, 0, 1)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
-    reserved_data = get_reserved_data('Room0_timetable2', name, 2)
+    reserved_data = get_reserved_data('Room0_timetable2', name, 0, 2)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
-    reserved_data = get_reserved_data('Room1_timetable0', name, 3)
+    reserved_data = get_reserved_data('Room1_timetable0', name, 1, 0)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
-    reserved_data = get_reserved_data('Room1_timetable1', name, 4)
+    reserved_data = get_reserved_data('Room1_timetable1', name, 1, 1)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
-    reserved_data = get_reserved_data('Room1_timetable2', name, 5)
+    reserved_data = get_reserved_data('Room1_timetable2', name, 1, 2)
     if reserved_data is not None:
         gathered_data.append(reserved_data)
 
     return gathered_data
 
-def get_reserved_data(table_name, name, room):
+def get_reserved_data(table_name, name, room, day_plus):
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
 
-    now = datetime.datetime.now()
+    now = datetime.datetime.today()
+    now += datetime.timedelta(days=day_plus)
     now_tuple = now.timetuple()
 
     cnt = 0
@@ -283,13 +287,23 @@ def get_reserved_data(table_name, name, room):
     con.close()
 
     tmp_arr = []
+    date = str(now_tuple.tm_year) + "-" + str(now_tuple.tm_mon) + "-" + str(now_tuple.tm_mday)
+
+    hour = (int(math.floor(start/2)) + 8)
+    minute = ((start % 2) * 30)
+
+    start_time = str(hour) + ':' + str(minute)
+
+    hour = (int(math.floor((int(start) + int(cnt))/2)) + 8)
+    minute = (((int(start) + int(cnt)) % 2) * 30)
+
+    end_time = str(hour) + ':' + str(minute)
+
     if cnt != 0:
+        tmp_arr.append(date)
         tmp_arr.append(room)
-        tmp_arr.append(start)
-        tmp_arr.append(cnt)
-        tmp_arr.append(now_tuple.tm_year)
-        tmp_arr.append(now_tuple.tm_mon)
-        tmp_arr.append(now_tuple.tm_mday)
+        tmp_arr.append(start_time)
+        tmp_arr.append(end_time)
         return tmp_arr
 
     return None

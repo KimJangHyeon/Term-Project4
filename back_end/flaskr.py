@@ -123,7 +123,14 @@ def signin():
         else:
             now = datetime.datetime.now()
             nowDate = now.strftime('%Y-%m-%d')
-            return render_template('reserve.html', uid = id, date = nowDate, arr=functions.timetable_into_arr())
+
+            t_year = now.strftime('%Y')
+            t_month = now.strftime('%m')
+            t_day = now.strftime('%d')
+
+            print t_day
+            return render_template('reserve.html', uid=id, date=nowDate, m_year=t_year,
+                                   m_month=t_month, m_day=t_day, arr=functions.timetable_into_arr())
 
 # mypage 실행
 @app.route("/mypagee", methods=['GET', 'POST'])
@@ -131,14 +138,10 @@ def go_mypage():
     logging.error("dsfkljsdklfjlsdkjf")
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
-    print("A")
     id = request.form['uid']
-    print("b")
     user= functions.infrom_by_id(id)
     name = user['name']
-    print(name)
-    arr= functions.load_reserved_data(name)
-    print arr
+    arr = functions.load_reserved_data(name)
     return render_template('mypage.html', uid=id, reserved=arr)
 
 @app.route("/mypage", methods=['GET', 'POST'])
@@ -192,6 +195,37 @@ def btn_reserve():
         functions.user_check(id, 0)
         logging.error('마이페이지로!!')
         return render_template('reserve.html', year=year, month=month, day=day, uid=id, arr=functions.timetable_into_arr())
+
+@app.route("/delete", methods=['GET', 'POST'])
+def btn_delete():
+    id = request.form['uid']
+    date = request.form['date']
+
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    id = request.form['uid']
+    user= functions.infrom_by_id(id)
+    name = user['name']
+    arr = ""
+    return render_template('mypage.html', uid=id, reserved=arr)
+
+@app.route("/reserved", methods=['GET', 'POST'])
+def go_reserved():
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+
+    if request.method == 'POST':
+        id = request.form['uid']
+        now = datetime.datetime.now()
+        nowDate = now.strftime('%Y-%m-%d')
+
+        t_year = now.strftime('%Y')
+        t_month = now.strftime('%m')
+        t_day = now.strftime('%d')
+
+        print t_year
+        return render_template('reserve.html', uid=id, date=nowDate, m_year=t_year,
+                               m_month=t_month, m_day=t_day, arr=functions.timetable_into_arr())
 
 #id로 login 하기
 if __name__ == "__main__":

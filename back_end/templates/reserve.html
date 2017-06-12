@@ -25,8 +25,8 @@
             <div id="logo">
                 <img id="logo_img" src="../static/public/images/logo_header.png" />
             </div>
-            <form id="logo_form" method="post" action="index.jsp">
-                <input type="hidden" name="hiddenvalue" value='go_reserve'>
+            <form id="logo_form" method="post" action="{{ url_for('go_reserved') }}">
+                <input type="hidden" name="uid" value='{{ uid }}'>
                 <p id="logo_txt" onclick="document.getElementById('logo_form').submit()">예약 시스템</p>
             </form>
 
@@ -52,7 +52,7 @@
             <p class="error"><strong>빼에엑 돌아가</strong>
         {% else %}
             <div id="day">
-                <a> 05.27(토) </a>
+                <a id="txt_today"> 05.27(토) </a>
                     <a class="button--left" onclick="move(-1)"></a>
                     <a class="button--right" onclick="move(1)"></a>
             </div>
@@ -160,13 +160,21 @@
     var arr_day1_room1 = {{ arr[4]|safe }};
     var arr_day2_room1 = {{ arr[5]|safe }};
 
+    var year = {{ m_year }};
+    var month = {{ m_month }};
+    var day = {{ m_day }};
+
+    var my_date = new Date(year + "-" + month + "-" + day);
 
     var move = function(delta) {
         i_day += delta;
         if (i_day < 0 || i_day > 2) {
             i_day -= delta;
+
             alert("거긴 못가!");
         } else {
+            my_date.setDate(my_date.getDate() + delta);
+            document.getElementById("txt_today").innerHTML = (my_date.getMonth() + 1) + "." + my_date.getDate();
             document.getElementById("reserve_form_day").value = i_day;
             show_graph_day_room();
         }
@@ -228,6 +236,7 @@
         document.getElementById("content_graph").innerHTML = graph_innerHTML;
     };
     // 초기화 할꺼
+    document.getElementById("txt_today").innerHTML = (my_date.getMonth() + 1) + "." + my_date.getDate();
     document.getElementById("reserve_form_day").value = i_day;
     document.getElementById("reserve_form_room").value = i_room;
     show_graph(arr_day0_room0);
