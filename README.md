@@ -4,8 +4,6 @@ https://github.com/KimJangHyeon/Term-Project4/wiki/%ED%94%84%EB%A1%9C%EC%A0%9D%E
 
 **주의사항!!!**
 
-**MySQL이 깔려있어야 합니다!!**
-
 **아래 실행 방법을 모두 따라해주세요!!!**
 
 ------
