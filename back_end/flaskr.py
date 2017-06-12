@@ -79,11 +79,11 @@ def id_into_name(uid):
 
 
 # sign up page 실행
-@app.route("/gosignup", methods=['GET', 'POST'])
+@app.route("/signup", methods=['GET', 'POST'])
 def go_signup():
     return render_template('signup.html')
 
-@app.route("/gosignin", method=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def go_signin():
     return render_template('signin.html')
 
@@ -93,7 +93,6 @@ def signup():
     error = None
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
-    logging.error(request.method)
     if request.method == 'POST':
         id = request.form['uid']
         pw = request.form['pw']
@@ -112,7 +111,6 @@ def signup():
                 error = 'Same ID Exists'
             # sign up 성공
             if error == None:
-                logging.error('enter error == None')
                 cur.execute('INSERT INTO userdata (id, password, username, check_ ) VALUES (?, ?, ?, ?)', [id, pw, name, 1])
                 con.commit()
                 con.close()
@@ -155,7 +153,6 @@ def signin():
             return render_template('signin.html', error=error)
         login_pw = cur.execute('SELECT password FROM userdata WHERE id = \''+ id + '\'').fetchone()
         con.close()
-        logging.error(login_pw[0])
         if(login_pw[0] != pw):
             error='id와 pw가 일치하지 않습니다'
             return render_template('signin.html', error=error)
@@ -200,7 +197,7 @@ def btn_reserve():
 
     if end>27:
         error='최대시간을 초과했습니다'
-        return render_template('reserve.html', uid-id, error=error)
+        return render_template('reserve.html', uid=id, error=error)
 
 
     user_dic = functions.infrom_by_id(id)

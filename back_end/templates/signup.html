@@ -18,9 +18,9 @@
             </div>
             <p id="logo_txt">예약 시스템</p>
 
-            <form id="signin_form" method="post" action="index.jsp">
+            <form id="signin_form" method="post" action="{{ url_for('go_signin') }}">
                 <input type="hidden" name="hiddenvalue" value='go_signin'>
-                <p id="signin_txt" type="submit" onclick="document.getElementById('signin_form').submit()">Sign In</p>
+                <p id="signin_txt" type="submit" onclick="document.getElementById('signin_form').submit()">Sign in</p>
             </form>
 
         </div>
