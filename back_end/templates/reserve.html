@@ -91,8 +91,8 @@
                 <form id="reserve_input" method="post" action={{ url_for('btn_reserve') }}>
                     <input type="hidden" name="hiddenvalue" value='reserve'>
                     <div id="wrapper_reserve_form" class="box">
-                        <p>시작시간</p>
-                        <select class="selector_border" name="start" required>
+                        <p><label for="start">시작시간</label></p>
+                        <select class="selector_border" id="start" name="start" required>
                             <option value="0">08:00</option>
                             <option value="1">08:30</option>
                             <option value="2">09:00</option>
@@ -123,8 +123,8 @@
                             <option value="27">21:30</option>
                         </select>
                         <br>
-                        <p>사용시간</p>
-                        <select class="selector_border" name="time">
+                        <p><label for="time">사용시간</label></p>
+                        <select class="selector_border" id="time" name="time">
                             <option value="30">30 min</option>
                             <option value="60">60 min</option>
                             <option value="90">90 min</option>
@@ -147,44 +147,13 @@
     var i_room = 0;
 
     // 0 오늘 1 내일 2 모래
-    var arr_day0_room0 = '{{ arr[0] }}';
-    console.log(arr_day0_room0);
-
-        /*[
-        "이름","","","","","","",
-        "","","","","이름2","이름2","",
-        "","","","","","","",
-        "","","","","","",""];
-*/
-    var arr_day1_room0 = [
-        "","2","","","","","",
-        "","","","","","","",
-        "","","","","","","",
-        "","","","","","",""];
-
-    var arr_day2_room0 = [
-        "","","3","","","","",
-        "","","","","","","",
-        "","","","","","","",
-        "","","","","","",""];
-
-    var arr_day0_room1 = [
-        "","","","4","","","",
-        "","","","","","","",
-        "","","","","","","",
-        "","","","","","",""];
-
-    var arr_day1_room1 = [
-        "","","","","5","","",
-        "","","","","","","",
-        "","","","","","","",
-        "","","","","","",""];
-
-    var arr_day2_room1 = [
-        "","","","","","6","",
-        "","","","","","","",
-        "","","","","","","",
-        "","","","","","",""];
+    var arr_day0_room0 = [];
+    arr_day0_room0 = {{ arr[0]|safe }};
+    var arr_day1_room0 = {{ arr[1]|safe }};
+    var arr_day2_room0 = {{ arr[2]|safe }};
+    var arr_day0_room1 = {{ arr[3]|safe }};
+    var arr_day1_room1 = {{ arr[4]|safe }};
+    var arr_day2_room1 = {{ arr[5]|safe }};
 
 
     var move = function(delta) {
@@ -230,10 +199,8 @@
     var show_graph = function(arr) {
         var graph_innerHTML = "";
         graph_innerHTML += "<ul class=\"chart-skills\">";
-        console.log(arr);
         for (var i = 0; i < 28; i++) {
-            console.log(arr[0][i]);
-            if (arr[0][i][1] === "NULL") {
+            if (arr[i] === " ") {
                 graph_innerHTML +=
                     "<li title=\""
                     + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
@@ -245,7 +212,7 @@
                     "<li title=\""
                     + (Math.floor(i/2)+8) + ":" + Math.floor(i%2)*30 + " ~ "
                     + (Math.floor((i+1)/2)+8) + ":" + (Math.floor(i+1)%2)*30 + "\""
-                    + "style=\"border-color: #00ff00\""
+                    + "style=\"border-color: #E0E0E0\""
                     + "><span></span></li>";
 
             }

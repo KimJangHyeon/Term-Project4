@@ -178,14 +178,58 @@ def day_reset():
 def timetable_into_arr():
     con =sqlite3.connect('sqlite.db')
     cur =con.cursor()
-    arr00 = cur.execute('SELECT * FROM Room0_timetable0').fetchall()
-    arr01 = cur.execute('SELECT * FROM Room0_timetable1').fetchall()
-    arr02 = cur.execute('SELECT * FROM Room0_timetable2').fetchall()
-    arr10 = cur.execute('SELECT * FROM Room1_timetable0').fetchall()
-    arr11 = cur.execute('SELECT * FROM Room1_timetable1').fetchall()
-    arr12 = cur.execute('SELECT * FROM Room1_timetable2').fetchall()
+    #arr00 = cur.execute('SELECT * FROM Room0_timetable0').fetchall()
+    arr00 = []
+    arr01 = []
+    arr02 = []
+    arr10 = []
+    arr11 = []
+    arr12 = []
+
+    rows = cur.execute('SELECT * FROM Room0_timetable0').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr00.append(" ")
+        else:
+            arr00.append(row[1])
+
+    rows = cur.execute('SELECT * FROM Room0_timetable1').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr01.append(" ")
+        else:
+            arr01.append(row[1])
+
+    rows = cur.execute('SELECT * FROM Room0_timetable2').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr02.append(" ")
+        else:
+            arr02.append(row[1])
+
+    rows = cur.execute('SELECT * FROM Room1_timetable0').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr10.append(" ")
+        else:
+            arr10.append(row[1])
+
+    rows = cur.execute('SELECT * FROM Room1_timetable1').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr11.append(" ")
+        else:
+            arr11.append(row[1])
+
+    rows = cur.execute('SELECT * FROM Room1_timetable2').fetchall()
+    for row in rows:
+        if row[1] == "NULL":
+            arr12.append(" ")
+        else:
+            arr12.append(row[1])
+
     arr = [arr00, arr01, arr02, arr10, arr11, arr12]
-    logging.error(arr[0][0][1])
+
     con.close()
     return arr
 
