@@ -165,18 +165,25 @@ def go_mypage():
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
-    logging.error('reserve 함수 실행')
+    logging.error('reserve 함수 실행1')
     cycle = functions.day_reset()
     for i in range(0, cycle):
         functions.day_changed()
-
     start = int(request.form['start'])
     time = int(request.form['time'])
     id = request.form['uid']
-    end = time/30 - 1 + start
+    room = request.form['reserve_form_room']
+    day = request.form['reserve_form_day']
+    print(room)
+    print(day)
 
+    logging.error('reserve 함수 실행6')
+    logging.error(id)
+    end = time/30 - 1 + start
+    logging.error('reserve 함수 실행7')
     if end>27:
         error='최대시간을 초과했습니다'
+        logging.error(error)
         return render_template('reserve.html', uid=id, error=error)
 
 
@@ -188,6 +195,7 @@ def btn_reserve():
         return render_template('reserve.html', uid=id, error=error)
 
     if request.method == 'POST':
+        logging.error('post')
         room = request.form['room']
         day = request.form['day']
         already_reserved = functions.already_reserved(room, day, start, end+1)
@@ -202,7 +210,7 @@ def btn_reserve():
             functions.booking_room(room, day, str(i), str(user_dic['name']))
         functions.user_check(id, 0)
         logging.error('마이페이지로!!')
-        return render_template('mypage.html', uid=id)
+        return render_template('reserve.html', uid=id)
 
 #id로 login 하기
 if __name__ == "__main__":

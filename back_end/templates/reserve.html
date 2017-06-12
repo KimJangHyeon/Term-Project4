@@ -89,7 +89,11 @@
                     </div>
                 </div>
                 <form id="reserve_input" method="post" action={{ url_for('btn_reserve') }}>
-                    <input type="hidden" name="hiddenvalue" value='reserve'>
+                    <input type="hidden" name="uid" value='{{ uid }}'>
+
+                    <input type="hidden" id="reserve_form_room" name="reserve_form_room" value="">
+                    <input type="hidden" id="reserve_form_day" name="reserve_form_day" value="">
+
                     <div id="wrapper_reserve_form" class="box">
                         <p><label for="start">시작시간</label></p>
                         <select class="selector_border" id="start" name="start" required>
@@ -147,8 +151,7 @@
     var i_room = 0;
 
     // 0 오늘 1 내일 2 모래
-    var arr_day0_room0 = [];
-    arr_day0_room0 = {{ arr[0]|safe }};
+    var arr_day0_room0 = {{ arr[0]|safe }};
     var arr_day1_room0 = {{ arr[1]|safe }};
     var arr_day2_room0 = {{ arr[2]|safe }};
     var arr_day0_room1 = {{ arr[3]|safe }};
@@ -162,6 +165,7 @@
             i_day -= delta;
             alert("거긴 못가!");
         } else {
+            document.getElementById("reserve_form_day").value = i_day;
             show_graph_day_room();
         }
     };
@@ -169,6 +173,7 @@
     var change_room = function(){
         if (i_room === 0) i_room = 1;
         else i_room = 0;
+        document.getElementById("reserve_form_room").value = i_room;
         document.getElementById("comment_room").innerHTML =
             "지금 보고 있는 화면은 " + i_room + "번방 예약 화면입니다 바꿀려면 \"방 바꾸기\"를 눌러";
         show_graph_day_room();
@@ -221,7 +226,10 @@
         document.getElementById("content_graph").innerHTML = graph_innerHTML;
     };
     // 초기화 할꺼
+    document.getElementById("reserve_form_day").value = i_day;
+    document.getElementById("reserve_form_room").value = i_room;
     show_graph(arr_day0_room0);
+
 </script>
 
 
