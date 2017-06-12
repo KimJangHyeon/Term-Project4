@@ -83,7 +83,7 @@ def id_into_name(uid):
 def go_signup():
     return render_template('signup.html')
 
-@app.route("/gosignin", method=['GET', 'POST'])
+@app.route("/gosignin", methods=['GET', 'POST'])
 def go_signin():
     return render_template('signin.html')
 
