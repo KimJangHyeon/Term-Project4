@@ -58,13 +58,15 @@ def home():
 def go_signup():
     return render_template('signup.html')
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/qwe", methods=['GET', 'POST'])
 def go_signin():
+    print("A")
     return render_template('signin.html')
 
 # sign up 에서 sign up 버튼을 누른 경우
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/sad", methods=['GET', 'POST'])
 def signup():
+    print("A")
     logging.error('signup들어옴')
     error = None
     con = sqlite3.connect("sqlite.db")
@@ -99,23 +101,6 @@ def signup():
     else:
         return render_template('signin.html')
 
-
-# def check_sign(id, pw):
-#     con = sqlite3.connect('sqlite.db')
-#     cur = con.cursor()
-#
-#     if request.method == 'POST':
-#         id = request.form['uid']
-#         pw = request.form['pw']
-#         if (id == ''):
-#             return 'id를 입력하세요'
-#         login_pw = cur.execute('SELECT password FROM userdata WHERE id = \'' + id + '\'').fetchone()
-#         con.close()
-#         logging.error(login_pw[0])
-#         if (login_pw[0] != pw):
-#             return 'id와 pw가 일치하지 않습니다'
-#         else:
-#             return render_template(url_for('signin', ))
 @app.route("/signin", methods=['GET', 'POST'])
 def signin():
     id=None
@@ -127,12 +112,13 @@ def signin():
         id = request.form['uid']
         pw = request.form['pw']
         if(id==''):
-            error = 'id를 입력하세요'
+            error = 'id not exists'
             return render_template('signin.html', error=error)
+
         login_pw = cur.execute('SELECT password FROM userdata WHERE id = \''+ id + '\'').fetchone()
         con.close()
         if(login_pw[0] != pw):
-            error='id와 pw가 일치하지 않습니다'
+            error = 'check your pw'
             return render_template('signin.html', error=error)
         else:
             now = datetime.datetime.now()
@@ -143,28 +129,26 @@ def signin():
 @app.route("/mypagee", methods=['GET', 'POST'])
 def go_mypage():
     logging.error("dsfkljsdklfjlsdkjf")
-    # 시간표 db에서 같은 아이디의 사람을 {'room_num', 'date', 'start', 'end'} 를 불러오는 arr 생성 및 넘겨주기
-    # id에 해당하는 유저의 정보를 user db에서 넘겨주기
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
-    #name = cur.execute('SELECT name FROM userdata WHERE id = \''+id+'\'').fetchone()
+    print("A")
+    id = request.form['uid']
+    print("b")
     user= functions.infrom_by_id(id)
     name = user['name']
-    
-    # arr = [
-    #     {'room_num': 0, 'date': '170606', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 1, 'date': '170606', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 0, 'date': '170607', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 1, 'date': '170607', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 0, 'date': '170608', 'start': '08:00', 'end': '09:00'},
-    #     {'room_num': 1, 'date': '170608', 'start': '08:00', 'end': '09:00'}
-    # ]
-    # reuturn render_template('mypage.html', user = arr, reserved = arr)
-    con.close()
-    return render_template('mypage.html', userid=id, reserved=arr)
+    print(name)
+    arr= functions.load_reserved_data(name)
+    print arr
+    return render_template('mypage.html', uid=id, reserved=arr)
 
 @app.route("/mypage", methods=['GET', 'POST'])
 def btn_reserve():
+    now = datetime.datetime.now()
+
+    year = now.strftime('%Y')
+    month = now.strftime('%m')
+    day = now.strftime('%d')
+
     logging.error('reserve 함수 실행1')
     cycle = functions.day_reset()
     for i in range(0, cycle):
@@ -174,43 +158,40 @@ def btn_reserve():
     id = request.form['uid']
     room = request.form['reserve_form_room']
     day = request.form['reserve_form_day']
-    print(room)
-    print(day)
 
     logging.error('reserve 함수 실행6')
     logging.error(id)
     end = time/30 - 1 + start
     logging.error('reserve 함수 실행7')
     if end>27:
-        error='최대시간을 초과했습니다'
+        error='exceed maxium count'
         logging.error(error)
-        return render_template('reserve.html', uid=id, error=error)
+        return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
 
 
     user_dic = functions.infrom_by_id(id)
     #예약가능 횟수:0
     if user_dic['check'] == 0:
         logging.error('오늘은 더 이상 예약 불가')
-        error = '오늘은 더 이상 예약안됨'
-        return render_template('reserve.html', uid=id, error=error)
+        error = 'today you can\'t reserve'
+        return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
 
     if request.method == 'POST':
         logging.error('post')
-        room = request.form['room']
-        day = request.form['day']
+
         already_reserved = functions.already_reserved(room, day, start, end+1)
         #이미 예약된 경우
         if already_reserved:
             logging.error('이미 예약된 시간')
-            error = '이미 예약이 되어 있음'
-            return render_template('reserve.html', uid=id, error=error)
+            error = 'that time is already reserved'
+            return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
         #예약을 하는 경우
         logging.error("예약하기 들어감")
         for i in range(start, end +1):
             functions.booking_room(room, day, str(i), str(user_dic['name']))
         functions.user_check(id, 0)
         logging.error('마이페이지로!!')
-        return render_template('reserve.html', uid=id)
+        return render_template('reserve.html', year=year, month=month, day=day, uid=id, arr=functions.timetable_into_arr())
 
 #id로 login 하기
 if __name__ == "__main__":

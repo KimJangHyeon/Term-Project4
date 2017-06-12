@@ -2,6 +2,7 @@
 import sqlite3
 import datetime
 import logging
+import unicodedata
 def initialize_db():
     con = sqlite3.connect("sqlite.db")
     cur = con.cursor()
@@ -64,7 +65,9 @@ def user_check(id, check):
 def booking_room(room, date, time, name):
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
-    cur.execute('UPDATE Room' + room + '_timetable' + date + 'SET name = \''+name+'\' WHERE time=\'t_'+str(time)+'\'')
+    str = 'UPDATE Room' + room + '_timetable' + date + ' SET name = ' + '\'' + name + '\' ' + 'WHERE time=' + '\'' + 't_'+time+'\''
+    cur.execute(str)
+    con.commit()
     con.close()
     return
 
@@ -179,42 +182,42 @@ def timetable_into_arr():
         if row[1] == "NULL":
             arr00.append(" ")
         else:
-            arr00.append(row[1])
+            arr00.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     rows = cur.execute('SELECT * FROM Room0_timetable1').fetchall()
     for row in rows:
         if row[1] == "NULL":
             arr01.append(" ")
         else:
-            arr01.append(row[1])
+            arr01.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     rows = cur.execute('SELECT * FROM Room0_timetable2').fetchall()
     for row in rows:
         if row[1] == "NULL":
             arr02.append(" ")
         else:
-            arr02.append(row[1])
+            arr02.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     rows = cur.execute('SELECT * FROM Room1_timetable0').fetchall()
     for row in rows:
         if row[1] == "NULL":
             arr10.append(" ")
         else:
-            arr10.append(row[1])
+            arr10.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     rows = cur.execute('SELECT * FROM Room1_timetable1').fetchall()
     for row in rows:
         if row[1] == "NULL":
             arr11.append(" ")
         else:
-            arr11.append(row[1])
+            arr11.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     rows = cur.execute('SELECT * FROM Room1_timetable2').fetchall()
     for row in rows:
         if row[1] == "NULL":
             arr12.append(" ")
         else:
-            arr12.append(row[1])
+            arr12.append(unicodedata.normalize('NFKD', row[1]).encode('ascii','ignore'))
 
     arr = [arr00, arr01, arr02, arr10, arr11, arr12]
 
@@ -222,3 +225,71 @@ def timetable_into_arr():
     return arr
 
 
+def load_reserved_data(name):
+    gathered_data = []
+
+    reserved_data = get_reserved_data('Room0_timetable0', name, 0)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    reserved_data = get_reserved_data('Room0_timetable1', name, 1)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    reserved_data = get_reserved_data('Room0_timetable2', name, 2)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    reserved_data = get_reserved_data('Room1_timetable0', name, 3)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    reserved_data = get_reserved_data('Room1_timetable1', name, 4)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    reserved_data = get_reserved_data('Room1_timetable2', name, 5)
+    if reserved_data is not None:
+        gathered_data.append(reserved_data)
+
+    return gathered_data
+
+def get_reserved_data(table_name, name, room):
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+
+    now = datetime.datetime.now()
+    now_tuple = now.timetuple()
+
+    cnt = 0
+    start = 0
+    index_start = -1
+    find = False
+
+    rows = cur.execute('SELECT * FROM ' + table_name).fetchall()
+    for row in rows:
+        index_start = index_start + 1
+        if name == unicodedata.normalize('NFKD', row[1]).encode('ascii', 'ignore'):
+            if find is False:
+                start = index_start
+                find = True
+            cnt = cnt + 1
+        else:
+            if find is False:
+                continue
+            if find is True:
+                break
+
+    con.close()
+
+    tmp_arr = []
+    if cnt != 0:
+        tmp_arr.append(room)
+        tmp_arr.append(start)
+        tmp_arr.append(cnt)
+        tmp_arr.append(now_tuple.tm_year)
+        tmp_arr.append(now_tuple.tm_mon)
+        tmp_arr.append(now_tuple.tm_mday)
+        return tmp_arr
+
+    return None
