@@ -195,12 +195,14 @@ def btn_reserve():
 
     start = int(request.form['start'])
     time = int(request.form['time'])
+    id = request.form['uid']
     end = time/30 - 1 + start
+
     if end>27:
         error='최대시간을 초과했습니다'
-        return render_template('reserve.html', error=error)
+        return render_template('reserve.html', uid-id, error=error)
 
-    id = request.form('uid')
+
     user_dic = functions.infrom_by_id(id)
     #예약가능 횟수:0
     if user_dic['check'] == 0:
@@ -208,8 +210,8 @@ def btn_reserve():
         return render_template('reserve.html', uid=id, error=error)
 
     if request.method == 'POST':
-        room = request.form('room')
-        day = request.form('day')
+        room = request.form['room']
+        day = request.form['day']
         already_reserved = functions.already_reserved(room, day, start, end+1)
         #이미 예약된 경우
         if already_reserved:

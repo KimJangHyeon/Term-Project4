@@ -115,8 +115,8 @@ def day_changed():
         cur.execute('UPDATE Room1_timetable1 SET name=\'' + name_3[0] + '\' WHERE time = \'t_' + str(i) + '\'')
 
         cur.execute('UPDATE Room1_timetable2 SET name=\'NULL\' WHERE time = \'t_' + str(i) + '\'')
-        con.commit()
-        con.close()
+    con.commit()
+    con.close()
     return
 
 def month(mon):
