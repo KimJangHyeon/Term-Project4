@@ -112,10 +112,15 @@ def signin():
         id = request.form['uid']
         pw = request.form['pw']
         if(id==''):
-            error = 'id not exists'
+            error = 'you should input id'
             return render_template('signin.html', error=error)
 
         login_pw = cur.execute('SELECT password FROM userdata WHERE id = \''+ id + '\'').fetchone()
+
+        if login_pw is None:
+            error = 'There is no such id'
+            return render_template('signin.html', error=error)
+
         con.close()
         if(login_pw[0] != pw):
             error = 'check your pw'
@@ -128,7 +133,6 @@ def signin():
             t_month = now.strftime('%m')
             t_day = now.strftime('%d')
 
-            print t_day
             return render_template('reserve.html', uid=id, date=nowDate, m_year=t_year,
                                    m_month=t_month, m_day=t_day, arr=functions.timetable_into_arr())
 

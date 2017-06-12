@@ -59,7 +59,10 @@
             <div id="room">
                 <a id="comment_room"> 지금 보고 있는 화면은 0번방 예약 화면입니다 바꿀려면 "방 바꾸기"를 눌러 </a>
                 <br>
-                <a onclick="change_room()"> 방 바꾸기 </a>
+                <a onclick="change_room()" style="
+                    font-weight: 800;
+                    font-size: 18px;
+                    padding: 12px;">방 바꾸기 </a>
                 {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
             </div>
 
