@@ -154,10 +154,23 @@ def day_reset():
     cur = con.cursor()
     today_db = cur.execute('SELECT today from day').fetchone()
     arr = today_db[0].split('-', 2)
+    arr_=[]
+    now_arr_ = []
+    arr_.append(int(unicodedata.normalize('NFKD', arr[0]).encode('ascii','ignore')))
+    arr_.append(int(unicodedata.normalize('NFKD', arr[1]).encode('ascii','ignore')))
+    arr_.append(int(unicodedata.normalize('NFKD', arr[2]).encode('ascii','ignore')))
+
+    nowDate_arr = nowDate.split('-')
+
+    now_arr_.append(int(nowDate_arr[0]))
+    now_arr_.append(int(nowDate_arr[1]))
+    now_arr_.append(int(nowDate_arr[2]))
+
+
     if nowDate == today_db[0]:
         con.close()
         return 0
-    db_prior = priority(arr)
+    db_prior = priority(arr_)
     to_prior = priority(nowDate.split('-', 2))
     cur.execute('UPDATE day SET today=\''+nowDate+'\' WHERE key_=1')
     con.commit()

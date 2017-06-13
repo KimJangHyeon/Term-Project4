@@ -50,6 +50,7 @@ def render_redirect(template, url, error):
 def home():
     functions.timetable_into_arr()
     functions.initialize_db()
+    functions.day_reset()
     #functions.initialize_time()
     return render_template('signin.html')
 
