@@ -62,6 +62,7 @@ def user_check(id, check):
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
     cur.execute('UPDATE userdata SET check_='+str(check)+' WHERE id = \'' + id + '\'')
+    con.commit()
     con.close()
     return
 
