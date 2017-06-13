@@ -67,7 +67,6 @@ def go_signin():
 # sign up 에서 sign up 버튼을 누른 경우
 @app.route("/sad", methods=['GET', 'POST'])
 def signup():
-    print("A")
     logging.error('signup들어옴')
     error = None
     con = sqlite3.connect("sqlite.db")
@@ -84,11 +83,17 @@ def signup():
 
         else:
             id_ = cur.execute(u'SELECT EXISTS (SELECT id FROM userdata WHERE id = ?)', (id,)).fetchone()
+            name_ = cur.execute(u'SELECT EXISTS (SELECT username FROM userdata WHERE username = ?)', (name,)).fetchone()
             logging.error(id_[0])
             # id 중복
             if (id_[0] != 0):
                 logging.error('아이디 중복')
                 error = 'Same ID Exists'
+
+            #
+            if (name_[0] != 0):
+                logging.error('이름 중복')
+                error = 'Same name Exists'
             # sign up 성공
             if error == None:
                 cur.execute('INSERT INTO userdata (id, password, username, check_ ) VALUES (?, ?, ?, ?)', [id, pw, name, 1])
@@ -153,9 +158,14 @@ def go_mypage():
 def btn_reserve():
     now = datetime.datetime.now()
 
-    year = now.strftime('%Y')
-    month = now.strftime('%m')
-    day = now.strftime('%d')
+    # year = now.strftime('%Y')
+    # month = now.strftime('%m')
+    # day = now.strftime('%d')
+    nowDate = now.strftime('%Y-%m-%d')
+    t_year = now.strftime('%Y')
+    t_month = now.strftime('%m')
+    t_day = now.strftime('%d')
+
 
     logging.error('reserve 함수 실행1')
     cycle = functions.day_reset()
@@ -169,21 +179,21 @@ def btn_reserve():
 
     logging.error('reserve 함수 실행6')
     logging.error(id)
+    user_dic = functions.infrom_by_id(id)
     end = time/30 - 1 + start
     logging.error('reserve 함수 실행7')
     if end>27:
         error='exceed maxium count'
         logging.error(error)
-        return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
+        #return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
+        return render_template('reserve.html', error=error, uid=id, date=nowDate, m_year=t_year, m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
 
-
-    user_dic = functions.infrom_by_id(id)
-    #예약가능 횟수:0
+     #예약가능 횟수:0
     if user_dic['check'] == 0:
         logging.error('오늘은 더 이상 예약 불가')
         error = 'today you can\'t reserve'
-        return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
-
+        #return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
+        return render_template('reserve.html', error=error, uid=id, date=nowDate, m_year=t_year,m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
     if request.method == 'POST':
         logging.error('post')
 
@@ -192,6 +202,11 @@ def btn_reserve():
         if already_reserved:
             logging.error('이미 예약된 시간')
             error = 'that time is already reserved'
+            #return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
+        return render_template('reserve.html', error=error, uid=id, date=nowDate, m_year=t_year,m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
+        #그 날짜에 이미 예약을 1번한 경우
+        if functions.sameday_booked(room, day, user_dic['name']):
+            error = 'reserved this day'
             return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
         #예약을 하는 경우
         logging.error("예약하기 들어감")
@@ -199,8 +214,8 @@ def btn_reserve():
             functions.booking_room(room, day, str(i), str(user_dic['name']))
         functions.user_check(id, 0)
         logging.error('마이페이지로!!')
-        return render_template('reserve.html', year=year, month=month, day=day, uid=id, arr=functions.timetable_into_arr())
-
+        #return render_template('reserve.html', year=year, month=month, day=day, uid=id, arr=functions.timetable_into_arr())
+        return render_template('reserve.html', uid=id, date=nowDate, m_year=t_year,m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
 @app.route("/delete", methods=['GET', 'POST'])
 def btn_delete():
     id = request.form['uid']

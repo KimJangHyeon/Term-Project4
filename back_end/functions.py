@@ -342,3 +342,41 @@ def reserve_delete(room, date, name):
 
     con.commit()
     con.close()
+
+
+def sameday_booked(room, date, name):
+    print room
+    print date
+    print name
+    result1 = 0
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    print 'ww'
+    if room == '0' and date == '0':
+        print 'wwwww'
+        result = cur.execute(u"SELECT EXISTS ( SELECT name FROM Room0_timetable0 where name = ?)", (name,)).fetchone()
+        print 'wioefjw'
+        print result[0]
+    elif room == '0' and date == '1':
+        result = cur.execute(u"SELECT EXISTS ( SELECT name FROM Room0_timetable1 where name = ?)", (name,)).fetchone()
+        print result[0]
+    elif room == '0' and date == '2':
+        result = cur.execute(u"SELECT EXISTS ( SELECT name FROM Room0_timetable2 where name = ?)", (name,)).fetchone()
+        print result
+    elif room == '1' and date == '0':
+        result = cur.execute(u"SELECT EXISTS ( SELECT name FROM Room1_timetable0 where name = ?)", (name,)).fetchone()
+        print result
+    elif room == '1' and date == '1':
+        result = cur.execute(u"SELECT EXISTS ( SELECT name FROM Room1_timetable1 where name = ?)", (name,)).fetchone()
+        print result
+    elif room == '1' and date == '2':
+        result = cur.execute(u"SELECT EXISTS ( SELSECT name FROM Room1_timetable2 where name = ?)", (name,)).fetchone()
+        print result
+    return result[0]
+
+
+    con.commit()
+    con.close()
+    return
+
+    email_ = cur.execute(u"SELECT EXISTS ( SELECT email FROM userdata where email = ?)", (self.email,)).fetchone()
