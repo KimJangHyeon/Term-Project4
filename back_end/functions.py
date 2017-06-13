@@ -114,29 +114,29 @@ def day_changed():
     return
 
 def month(mon):
-    if mon=='01':
+    if mon==1:
         return 31
-    if mon == '02':
+    if mon == 2:
         return 28
-    if mon == '03':
+    if mon == 3:
         return 31
-    if mon == '04':
+    if mon == 4:
         return 30
-    if mon == '05':
+    if mon == 5:
         return 31
-    if mon == '06':
+    if mon == 6:
         return 30
-    if mon == '07':
+    if mon == 7:
         return 31
-    if mon == '08':
+    if mon == 8:
         return 31
-    if mon == '09':
+    if mon == 9:
         return 30
-    if mon == '10':
+    if mon == 10:
         return 31
-    if mon == '11':
+    if mon == 11:
         return 30
-    if mon == '12':
+    if mon == 12:
         return 31
 
 
@@ -307,3 +307,24 @@ def get_reserved_data(table_name, name, room, day_plus):
         return tmp_arr
 
     return None
+
+
+def reserve_delete(room, date, name):
+    now = datetime.datetime.now()
+    nowDate = now.strftime('%Y-%m-%d')
+    date_arr=date.split('-')
+    date_arr_=[]
+    date_arr_.append(int(unicodedata.normalize('NFKD', date_arr[0]).encode('ascii', 'ignore')))
+    date_arr_.append(int(unicodedata.normalize('NFKD', date_arr[1]).encode('ascii', 'ignore')))
+    date_arr_.append(int(unicodedata.normalize('NFKD', date_arr[2]).encode('ascii', 'ignore')))
+    now_arr=nowDate.split('-')
+    now_arr_=[int(now_arr[0]), int(now_arr[1]), int(now_arr[2])]
+    num = priority(date_arr_)-priority(now_arr_)
+    print num
+    con = sqlite3.connect('sqlite.db')
+    cur = con.cursor()
+    print 'UPDATE Room'+room+'_timetable'+str(num)+' SET name='+'\''+'NULL'+'\'' + ' WHERE name = '+'\''+name+'\''
+    cur.execute('UPDATE Room'+room+'_timetable'+str(num)+' SET name='+'\''+'NULL'+'\'' + ' WHERE name = '+'\''+name+'\'')
+
+    con.commit()
+    con.close()

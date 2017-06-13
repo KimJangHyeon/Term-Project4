@@ -204,13 +204,14 @@ def btn_reserve():
 def btn_delete():
     id = request.form['uid']
     date = request.form['date']
-
+    room = request.form['room']
     con = sqlite3.connect('sqlite.db')
     cur = con.cursor()
     id = request.form['uid']
     user= functions.infrom_by_id(id)
     name = user['name']
-    arr = ""
+    functions.reserve_delete(room, date, user['name'])
+    arr = functions.load_reserved_data(name)
     return render_template('mypage.html', uid=id, reserved=arr)
 
 @app.route("/reserved", methods=['GET', 'POST'])

@@ -67,6 +67,7 @@
                 <form id="delete_reserved_form" method="post" action="{{ url_for('btn_delete') }}">
                     <input type="hidden" name="uid" value='{{ uid }}'>
                     <input type="hidden" name="date" value='{{ tmp_reserved[0] }}'>
+                    <input type="hidden" name="room" value="{{ tmp_reserved[1] }}">
                     <td id="delete"><p id="delete_txt" onclick="document.getElementById('delete_reserved_form').submit()">삭제하기</p></td>
                 </form>
 
