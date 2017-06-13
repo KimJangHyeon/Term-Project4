@@ -203,7 +203,7 @@ def btn_reserve():
             logging.error('이미 예약된 시간')
             error = 'that time is already reserved'
             #return render_template('reserve.html', uid=id, error=error, arr=functions.timetable_into_arr())
-        return render_template('reserve.html', error=error, uid=id, date=nowDate, m_year=t_year,m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
+            return render_template('reserve.html', error=error, uid=id, date=nowDate, m_year=t_year,m_month=t_month, m_day = t_day, arr = functions.timetable_into_arr())
         #그 날짜에 이미 예약을 1번한 경우
         if functions.sameday_booked(room, day, user_dic['name']):
             error = 'reserved this day'
